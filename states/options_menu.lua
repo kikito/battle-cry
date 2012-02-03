@@ -1,0 +1,21 @@
+local Game     = require 'game'
+local Menu     = require 'lib.menu'
+local MainMenu = require 'states.main_menu'
+
+local OptionsMenu = Game:addState('OptionsMenu', MainMenu)
+
+function OptionsMenu:enteredState()
+  self:log('Entering OptionsMenu')
+
+  self.menu = Menu:new({
+    { 'Keyboard', function() self:pushState('NotImplemented') end },
+    { 'Sound', function() self:pushState('NotImplemented') end },
+    { 'Back', function() self:gotoState('MainMenu') end },
+  })
+end
+
+function OptionsMenu:escape()
+  self:gotoState('MainMenu')
+end
+
+return OptionsMenu
