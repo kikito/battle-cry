@@ -9,6 +9,7 @@ local Game = require 'game'
 require 'states.loading'
 require 'states.main_menu'
 require 'states.options_menu'
+require 'states.keyboard_menu'
 require 'states.not_implemented'
 
 
@@ -16,7 +17,7 @@ require 'states.not_implemented'
 local game
 
 function love.load()
-  game = Game:new()
+  game = Game:new('z')
 end
 
 function love.draw()
