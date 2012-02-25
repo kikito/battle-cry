@@ -16,6 +16,7 @@ end
 
 function ChoosingKey:exitedState()
   beholder.stopObserving(id)
+  self.config:save()
 end
 
 function ChoosingKey:draw()
