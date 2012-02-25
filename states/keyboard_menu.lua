@@ -17,7 +17,8 @@ function KeyboardMenu:enteredState()
     menuOptions[#menuOptions + 1] = {
       ("%s (%s)"):format(action, key),
       function()
-        print(("choosing new key for %s"):format(action))
+        self.modifiedAction = action
+        self:gotoState("ChoosingKey")
       end
     }
   end
@@ -30,4 +31,4 @@ function KeyboardMenu:escape()
   self:gotoState('OptionsMenu')
 end
 
-return OptionsMenu
+return KeyboardMenu

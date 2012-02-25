@@ -8,9 +8,9 @@ function OptionsMenu:enteredState()
   self:log('Entering OptionsMenu')
 
   self.menu = Menu:new({
-    { 'Keyboard', function() self:gotoState('KeyboardMenu') end },
-    { 'Sound', function() self:pushState('NotImplemented') end },
-    { 'Back', function() self:gotoState('MainMenu') end },
+    { 'Keyboard', function() self:gotoState('KeyboardMenu')   end },
+    { 'Sound',    function() self:pushState('NotImplemented') end },
+    { 'Back',     function() self:gotoState('MainMenu')       end },
   })
 end
 

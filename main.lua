@@ -10,6 +10,7 @@ require 'states.loading'
 require 'states.main_menu'
 require 'states.options_menu'
 require 'states.keyboard_menu'
+require 'states.choosing_key'
 require 'states.not_implemented'
 
 

@@ -8,8 +8,8 @@ function MainMenu:enteredState()
 
   self.menu = Menu:new({
     { 'Start Game', function() self:pushState('NotImplemented') end },
-    { 'Options', function() self:gotoState('OptionsMenu') end },
-    { 'Exit', function() self:exit() end }
+    { 'Options',    function() self:gotoState('OptionsMenu')    end },
+    { 'Exit',       function() self:exit()                      end }
   })
 end
 
