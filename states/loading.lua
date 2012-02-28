@@ -1,32 +1,32 @@
-
-
--- This game state simulates loading the resources of a game
--- It doesn't really load any images - it just uses cron.lua to pass some time
--- cron.lua is updated on the main.lua file; it could be also updated inside Loading:update here.
+local loader = require 'lib.love-loader'
 
 local Game = require 'game'
-
 local Loading = Game:addState('Loading')
 
-local percent = 0
-
-function Loading:enteredState()
-
-  self:log('Entered Loading')
-
-  local counterId = cron.every(0.5, function()
-    percent = percent + 10
-  end)
-
-  cron.after(5, function()
-    cron.cancel(counterId)
-    self:gotoState('MainMenu')
-  end)
-
+function readMediaList(f, holder, folder)
+  local lfs = love.filesystem
+  local fileNames = lfs.enumerate(folder)
+  for i,fileName in ipairs(fileNames) do
+    local path  = folder.."/".. fileName
+    if lfs.isFile(path) then
+      local name = fileName:match("(.+)%.") -- transforms "file.png" into "file"
+      f(holder, name, path)
+    end
+  end
 end
 
-function Loading:draw()
-  love.graphics.print("Loading ... " .. percent .. "%", 350, 280)
+function Loading:enteredState()
+  self:log('Entered Loading')
+  Game.static.media = {
+    images  = {}
+  }
+  readMediaList(loader.newImage, Game.media.images, 'media/images')
+
+  loader.start(function() self:gotoState("MainMenu") end)
+end
+
+function Loading:update()
+  loader.update()
 end
 
 return Loading

@@ -8,7 +8,7 @@ local Game = class('Game'):include(Stateful)
 function Game:initialize(identity)
   love.filesystem.setIdentity(identity)
   self.config = GameConfig:new()
-  self:gotoState('MainMenu') -- go to the first state here, if you want
+  self:gotoState('Loading') -- go to the first state here, if you want
   beholder.observe('keypressed', 'escape', function()
     self:escape()
   end)

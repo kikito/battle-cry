@@ -7,7 +7,7 @@ function MainMenu:enteredState()
   self:log('Entering MainMenu')
 
   self.menu = Menu:new({
-    { 'Start Game', function() self:pushState('NotImplemented') end },
+    { 'Start Game', function() self:pushState('Play') end },
     { 'Options',    function() self:gotoState('OptionsMenu')    end },
     { 'Exit',       function() self:exit()                      end }
   })

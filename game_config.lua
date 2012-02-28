@@ -37,8 +37,6 @@ end
 function GameConfig:load()
   local f = love.filesystem.load("config.lua")
   self.keys = (f()).keys
-  print(inspect(self))
-
 end
 
 return GameConfig
