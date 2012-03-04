@@ -35,8 +35,8 @@ function Player:initialize(x,y)
 
   beholder.group(self, function()
     for _,dir in ipairs({'up','right','down','left'}) do
-      beholder.observe('keypressed', dir, function() self.want[dir] = true end)
-      beholder.observe('keyreleased', dir, function() self.want[dir] = false end)
+      beholder.observe('startaction', dir, function() self.want[dir] = true end)
+      beholder.observe('stopaction',  dir, function() self.want[dir] = false end)
     end
   end)
 end

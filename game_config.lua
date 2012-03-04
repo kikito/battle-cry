@@ -1,4 +1,6 @@
 
+local beholder = require 'lib.beholder'
+
 local defaults = {
   keys = {
     up     = 'up',
@@ -13,10 +15,12 @@ local GameConfig = class('GameConfig')
 
 function GameConfig:initialize()
   if love.filesystem.exists("config.lua") then
-    self:load()
+    local f = love.filesystem.load("config.lua")
+    self.keys = (f()).keys
   else
     self.keys = defaults.keys
   end
+  self:bindActions()
 end
 
 function GameConfig:save()
@@ -34,9 +38,23 @@ function GameConfig:save()
   file:close()
 end
 
-function GameConfig:load()
-  local f = love.filesystem.load("config.lua")
-  self.keys = (f()).keys
+function GameConfig:setKey(action, key)
+  self.keys[action] = key
+  self:bindActions()
+end
+
+function GameConfig:bindActions()
+  beholder.stopObserving(self)
+  beholder.group(self, function()
+    for action, key in pairs(self.keys) do
+      beholder.observe('keypressed', key, function()
+        beholder.trigger('startaction', action)
+      end)
+      beholder.observe('keyreleased', key, function()
+        beholder.trigger('stopaction', action)
+      end)
+    end
+  end)
 end
 
 return GameConfig
