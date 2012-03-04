@@ -54,14 +54,16 @@ end
 
 function Button:activate()
   if self.active then return end
-  self.beholder_id = beholder.observe('mousepressed', 'l', function(x,y)
-    if isInside(self, x, y) then self:action() end
+  beholder.group(self, function()
+    beholder.observe('mousepressed', 'l', function(x,y)
+      if isInside(self, x, y) then self:action() end
+    end)
   end)
   self.active = true
 end
 
 function Button:deactivate()
-  beholder.stopObserving(self.beholder_id)
+  beholder.stopObserving(self)
   self.active = false
 end
 
@@ -136,18 +138,16 @@ end
 
 function Menu:deactivate()
   eachButton(self, 'deactivate')
-  for _,id in pairs(self.ids) do
-    beholder.stopObserving(id)
-  end
+  beholder.stopObserving(self)
 end
 
 function Menu:activate()
   eachButton(self, 'activate')
-  self.ids = {
-    up     = beholder.observe('keypressed', 'up',     function() moveSelected(self,-1) end),
-    down   = beholder.observe('keypressed', 'down',   function() moveSelected(self, 1) end),
-    action = beholder.observe('keypressed', 'return', function() self.buttons[self.selected]:action() end)
-  }
+  beholder.group(self, function()
+    beholder.observe('keypressed', 'up',     function() moveSelected(self,-1) end)
+    beholder.observe('keypressed', 'down',   function() moveSelected(self, 1) end)
+    beholder.observe('keypressed', 'return', function() self.buttons[self.selected]:action() end)
+  end)
 end
 
 function Menu:destroy()

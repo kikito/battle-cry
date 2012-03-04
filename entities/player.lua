@@ -33,12 +33,12 @@ function Player:initialize(x,y)
   self.facing   = 'left'
   self.want     = {}
 
-  local ids = {}
-  for _,dir in ipairs({'up','right','down','left'}) do
-    ids[#ids+1] = beholder.observe('keypressed', dir, function() self.want[dir] = true end)
-    ids[#ids+1] = beholder.observe('keyreleased', dir, function() self.want[dir] = false end)
-  end
-  self.ids = ids
+  beholder.group(self, function()
+    for _,dir in ipairs({'up','right','down','left'}) do
+      beholder.observe('keypressed', dir, function() self.want[dir] = true end)
+      beholder.observe('keyreleased', dir, function() self.want[dir] = false end)
+    end
+  end)
 end
 
 local function getCurrentAnimation(self)
@@ -70,14 +70,6 @@ function Player:update(dt)
   else
     animation:update(dt)
   end
-end
-
-
-function Player:destroy()
-  for _,id in ipairs(self.ids) do
-    beholder.stopObserving(id)
-  end
-  Entity.destroy(self)
 end
 
 return Player

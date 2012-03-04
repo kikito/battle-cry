@@ -1,3 +1,5 @@
+local beholder = require 'lib.beholder'
+
 local Entity = class('Entity')
 
 local function clone(t)
@@ -55,6 +57,7 @@ end
 
 function Entity:destroy()
   remove(self, self.class)
+  beholder.stopObserving(self)
 end
 
 function Entity:draw()
