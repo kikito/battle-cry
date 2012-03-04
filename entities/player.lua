@@ -17,16 +17,16 @@ function Player:initialize(x,y)
   local g = anim8.newGrid(32, 32, self.image:getWidth(), self.image:getHeight())
   self.animations = {
     walk = {
-      up    = anim8.newAnimation('loop', 0.1,  g('2-8,1')),
-      right = anim8.newAnimation('loop', 0.08, g('2-8,2', 1,2)),
-      down  = anim8.newAnimation('loop', 0.1,  g('2-8,3')),
-      left  = anim8.newAnimation('loop', 0.08, g('2-8,4', 1,4))
+      up    = anim8.newAnimation('loop', g('2-8,1'),      0.1),
+      right = anim8.newAnimation('loop', g('2-8,2', 1,2), 0.08),
+      down  = anim8.newAnimation('loop', g('2-8,3'),      0.1),
+      left  = anim8.newAnimation('loop', g('2-8,4', 1,4), 0.08)
     },
     idle = {
-      up    = anim8.newAnimation('once', 0.1,  g(1,1)),
-      right = anim8.newAnimation('once', 0.1,  g(1,2)),
-      down  = anim8.newAnimation('once', 0.1,  g(1,3)),
-      left  = anim8.newAnimation('once', 0.1,  g(1,4))
+      up    = anim8.newAnimation('once', g(1,1), 1),
+      right = anim8.newAnimation('once', g(1,2), 1),
+      down  = anim8.newAnimation('once', g(1,3), 1),
+      left  = anim8.newAnimation('once', g(1,4), 1)
     }
   }
   self.status   = 'idle'
