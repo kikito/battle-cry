@@ -4,19 +4,15 @@ local Stateful = require 'lib.stateful'
 
 local inspect = require 'lib.inspect'
 
-local Game   = require 'game'
-local Entity = require 'entities.entity'
+local Game         = require 'game'
+local Entity       = require 'entities.entity'
+local MobileEntity = require 'entities.mobile_entity'
 
-local Player = class('Player', Entity):include(Stateful)
+local Player = class('Player', Entity):include(Stateful, MobileEntity)
 
 local playerActions =    {'up', 'right', 'down', 'left'}
-local playerDirections = {'up', 'right', 'down', 'left'}
 
-function Player:initialize(x,y)
-  Entity.initialize(self)
-
-  self.x, self.y = x,y
-
+local function loadAnimations(self)
   self.image  = Game.media.images.sprite
   local g = anim8.newGrid(32, 32, self.image:getWidth(), self.image:getHeight())
   self.animations = {
@@ -33,7 +29,12 @@ function Player:initialize(x,y)
       left  = anim8.newAnimation('once', g(1,4), 1)
     }
   }
-  self.want     = {}
+end
+
+function Player:initialize(x,y)
+  Entity.initialize(self)
+
+  loadAnimations(self)
 
   beholder.group(self, function()
     for _,action in ipairs(playerActions) do
@@ -42,25 +43,25 @@ function Player:initialize(x,y)
     end
   end)
 
+  self:setPosition(x,y)
+  self.speed = 60
+
   self.facing   = 'left'
   self:gotoState('Idle')
 end
 
 function Player:draw()
-  local animation = self:getCurrentAnimation(self)
-  animation:draw(self.image, self.x, self.y)
-  love.graphics.print(animation.position, self.x, self.y + 40)
-  love.graphics.print(self.facing, self.x, self.y + 60)
+  self:getCurrentAnimation():draw(self.image, self:getPosition())
 end
 
 
 local Idle = Player:addState('Idle')
 
 function Idle:update(dt)
-  for _,action in ipairs(playerActions) do
-    if self.want[action] then
-      self:gotoState('Walking')
-    end
+  self:prepareMove()
+  if self:isMoving() then
+    self:gotoState('Walking')
+    self:update(dt)
   end
 end
 
@@ -75,16 +76,11 @@ function Walking:enteredState()
 end
 
 function Walking:update(dt)
-  local prevStatus, prevFacing = self.status, self.facing
+  local prevFacing = self.facing
 
-  local moving = false
-  for _,dir in ipairs(playerDirections) do
-    if self.want[dir] then
-      self.facing = dir
-      moving = true
-    end
-  end
-  if not moving then self:gotoState('Idle') end
+  self:prepareMove()
+
+  if not self:isMoving() then self:gotoState('Idle') end
 
   local anim = self:getCurrentAnimation()
   if prevFacing == self.facing then
@@ -92,6 +88,8 @@ function Walking:update(dt)
   else
     anim:gotoFrame(1)
   end
+
+  self:move(dt)
 end
 
 function Walking:getCurrentAnimation()

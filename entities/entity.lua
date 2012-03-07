@@ -53,6 +53,7 @@ end
 
 function Entity:initialize()
   add(self, self.class)
+  self.want = {}
 end
 
 function Entity:destroy()
