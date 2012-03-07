@@ -48,10 +48,10 @@ function GameConfig:bindActions()
   beholder.group(self, function()
     for action, key in pairs(self.keys) do
       beholder.observe('keypressed', key, function()
-        beholder.trigger('startaction', action)
+        beholder.trigger('start_player_action', action)
       end)
       beholder.observe('keyreleased', key, function()
-        beholder.trigger('stopaction', action)
+        beholder.trigger('stop_player_action', action)
       end)
     end
   end)

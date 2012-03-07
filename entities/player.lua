@@ -1,12 +1,16 @@
 local anim8    = require 'lib.anim8'
 local beholder = require 'lib.beholder'
+local Stateful = require 'lib.stateful'
 
 local inspect = require 'lib.inspect'
 
 local Game   = require 'game'
 local Entity = require 'entities.entity'
 
-local Player = class('Player', Entity)
+local Player = class('Player', Entity):include(Stateful)
+
+local playerActions =    {'up', 'right', 'down', 'left'}
+local playerDirections = {'up', 'right', 'down', 'left'}
 
 function Player:initialize(x,y)
   Entity.initialize(self)
@@ -29,47 +33,69 @@ function Player:initialize(x,y)
       left  = anim8.newAnimation('once', g(1,4), 1)
     }
   }
-  self.status   = 'idle'
-  self.facing   = 'left'
   self.want     = {}
 
   beholder.group(self, function()
-    for _,dir in ipairs({'up','right','down','left'}) do
-      beholder.observe('startaction', dir, function() self.want[dir] = true end)
-      beholder.observe('stopaction',  dir, function() self.want[dir] = false end)
+    for _,action in ipairs(playerActions) do
+      beholder.observe('start_player_action', action, function() self.want[action] = true end)
+      beholder.observe('stop_player_action',  action, function() self.want[action] = false end)
     end
   end)
-end
 
-local function getCurrentAnimation(self)
-  return self.animations[self.status][self.facing]
+  self.facing   = 'left'
+  self:gotoState('Idle')
 end
 
 function Player:draw()
-  local animation = getCurrentAnimation(self)
+  local animation = self:getCurrentAnimation(self)
   animation:draw(self.image, self.x, self.y)
   love.graphics.print(animation.position, self.x, self.y + 40)
   love.graphics.print(self.facing, self.x, self.y + 60)
 end
 
-function Player:update(dt)
-  local prevStatus, prevFacing = self.status, self.facing
 
-  self.status = 'idle'
-  local facing = self.facing
-  for _,dir in ipairs({'up','right','down','left'}) do
-    if self.want[dir] then
-      self.facing = dir
-      self.status = 'walk'
+local Idle = Player:addState('Idle')
+
+function Idle:update(dt)
+  for _,action in ipairs(playerActions) do
+    if self.want[action] then
+      self:gotoState('Walking')
     end
   end
+end
 
-  local animation = getCurrentAnimation(self)
-  if prevStatus ~= self.status or prevFacing ~= self.facing then
-    animation:gotoFrame(1)
-  else
-    animation:update(dt)
+function Idle:getCurrentAnimation()
+  return self.animations.idle[self.facing]
+end
+
+local Walking = Player:addState('Walking')
+
+function Walking:enteredState()
+  self:getCurrentAnimation():gotoFrame(1)
+end
+
+function Walking:update(dt)
+  local prevStatus, prevFacing = self.status, self.facing
+
+  local moving = false
+  for _,dir in ipairs(playerDirections) do
+    if self.want[dir] then
+      self.facing = dir
+      moving = true
+    end
   end
+  if not moving then self:gotoState('Idle') end
+
+  local anim = self:getCurrentAnimation()
+  if prevFacing == self.facing then
+    anim:update(dt)
+  else
+    anim:gotoFrame(1)
+  end
+end
+
+function Walking:getCurrentAnimation()
+  return self.animations.walk[self.facing]
 end
 
 return Player
