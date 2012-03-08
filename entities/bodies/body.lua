@@ -13,4 +13,7 @@ function Body:getPosition()
   return self.x, self.y
 end
 
+function Body:destroy()
+end
+
 return Body

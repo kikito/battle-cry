@@ -51,21 +51,25 @@ end
 
 --------------------------------------
 
-function Entity:initialize()
+function Entity:initialize(brain, body)
+  self.brain = brain
+  self.body  = body
   add(self, self.class)
-  self.want = {}
 end
 
 function Entity:destroy()
   remove(self, self.class)
-  beholder.stopObserving(self)
+  self.brain:destroy()
+  self.body:destroy()
 end
 
 function Entity:draw()
+  self.body:draw()
 end
 
 function Entity:update(dt)
+  self.brain:update(dt)
+  self.body:update(self.brain.want, dt)
 end
-
 
 return Entity
