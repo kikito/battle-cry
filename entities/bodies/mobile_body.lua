@@ -1,8 +1,7 @@
--- this is not a class, but a mixin
--- it represents entities that can be moved
 
+local Body       = require('entities.bodies.body')
 
-local MobileEntity = {}
+local MobileBody = class('MobileBody', Body)
 
 local deltasByDirection = {
   up   =  { 0, -1 },
@@ -11,22 +10,18 @@ local deltasByDirection = {
   right = { 1,  0 }
 }
 
-function MobileEntity:setPosition(x,y)
-  self.x, self.y = x, y
+function MobileBody:initialize(x,y)
+  Body.setPosition(self, x,y)
 end
 
-function MobileEntity:getPosition()
-  return self.x, self.y
-end
-
-function MobileEntity:getVelocity()
+function MobileBody:getVelocity()
   return self.vx, self.vy
 end
 
-function MobileEntity:prepareMove()
+function MobileBody:prepareMove(want)
   local dx, dy = 0,0
   for dir,delta in pairs(deltasByDirection) do
-    if self.want[dir] then
+    if want[dir] then
       dx = dx + delta[1]
       dy = dy + delta[2]
       self.facing = dir
@@ -36,16 +31,16 @@ function MobileEntity:prepareMove()
   self.vy = self.speed * dy
 end
 
-function MobileEntity:move(dt)
+function MobileBody:move(dt)
   local x, y = self:getPosition()
   local vx, vy = self:getVelocity()
   self:setPosition(x + vx*dt, y + vy*dt)
 end
 
-function MobileEntity:isMoving()
+function MobileBody:isMoving()
   local vx, vy = self:getVelocity()
   return vx ~= 0 or vy ~= 0
 end
 
 
-return MobileEntity
+return MobileBody
