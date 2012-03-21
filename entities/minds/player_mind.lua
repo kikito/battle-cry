@@ -1,10 +1,10 @@
 local beholder = require 'lib.beholder'
 
-local Brain       = require 'entities.brains.brain'
-local PlayerBrain = class('PlayerBrain', Brain)
+local Mind       = require 'entities.minds.mind'
+local PlayerMind = class('PlayerMind', Mind)
 
-function PlayerBrain:initialize()
-  Brain.initialize(self)
+function PlayerMind:initialize()
+  Mind.initialize(self)
 
   beholder.group(self, function()
     for _,action in ipairs({'up','down','right','left'}) do
@@ -15,8 +15,8 @@ function PlayerBrain:initialize()
 
 end
 
-function PlayerBrain:destroy()
+function PlayerMind:destroy()
   beholder.stopObserving(self)
 end
 
-return PlayerBrain
+return PlayerMind
