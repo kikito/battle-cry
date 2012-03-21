@@ -1,4 +1,3 @@
-
 local Body       = require('entities.bodies.body')
 
 local MobileBody = class('MobileBody', Body)

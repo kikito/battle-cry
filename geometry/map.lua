@@ -1,28 +1,34 @@
+local Grass = require('geometry.tiles.grass')
+
 local Map = class('Map')
 
-function Map:initialize(width, height, tileWidth, tileHeight)
+local tileWidth, tileHeight = 32, 32
+
+function Map:initialize(width, height)
   self.width = width
   self.height = height
-  self.tileWidth = tileWidth
-  self.tileHeight = tileHeight
   self.tiles = {}
-end
-
-function Map:draw(minx, miny, width, height)
-  local tile, worldx, worldy
-  for x=minx, minx+width do
-    for y=miny, miny+height do
-      tile = self.tiles[x][y]
-      worlx, worldy = self:getWorldCoordinates(x,y)
-      tile:draw(worldx, worldy)
+  for x=1,width do
+    self.tiles[x]={}
+    for y=1,height do
+      self.tiles[x][y] = Grass:new(self:toWorld(x,y))
     end
   end
 end
 
-function Map:toWorldCoordinates(x,y)
-  return x*self.tileWidth, y*self.tileHeight
+function Map:draw(minx, miny, width, height)
+  minx, miny = minx or 1, miny or 1
+  width, height = width or self.width, height or self.height
+
+  for x=minx, minx+width-1 do
+    for y=miny, miny+height-1 do
+      self.tiles[x][y]:draw()
+    end
+  end
 end
 
-function Map:toCenteredWorldCoordinates(x,y)
-  return (x+0.5)*self.tileWidth, (y+0.5)*self.tileHeight
+function Map:toWorld(x,y)
+  return (x-1)*tileWidth, (y-1)*tileHeight
 end
+
+return Map
