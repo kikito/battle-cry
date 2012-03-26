@@ -40,6 +40,11 @@ function HumanBody:draw()
   self:getCurrentAnimation():draw(self.image, self:getPosition())
 end
 
+function HumanBody:getFeetPosition()
+  local x,y = self:getPosition()
+  return x+16,y+26
+end
+
 local Idle = HumanBody:addState('Idle')
 
 function Idle:update(want, dt)

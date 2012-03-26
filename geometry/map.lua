@@ -31,4 +31,9 @@ function Map:toWorld(x,y)
   return (x-1)*tileWidth, (y-1)*tileHeight
 end
 
+local floor = math.floor
+function Map:getContainingCell(wx, wy)
+  return floor(wx/tileWidth)+1, floor(wy/tileHeight)+1
+end
+
 return Map
