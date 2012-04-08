@@ -1,33 +1,232 @@
 # Battle Cry
 
+A game for Linux, Mac and Windows.
+Copyright 2012 Enrique García Cota (kikito)
+
 ## Short description
 
-Combat-oriented Zelda with procedural levels.
+I liked Zelda: A Link to the Past a lot. I wished it was longer, and had more varied combat. This is what I'd like to do on this game: how would a combat-oriented Zelda look like?
 
-## Game Type/Genre
+I don't think making the levels just "bigger than in Zelda" is the right thing to. Instead, I'd like to explore the possibility of generating them procedurally. This should give the game a longer lifespan, without needing me to create infinite levels.
 
-Battle-cry is a dungeon crawler with zelda-inspired gameplay. The levels are procedurally generated. The player must use and improve equipment and habilities in order to survive.
+One difference is the stress in combat, as opposed to "puzzles" which will be rare and simple - nothing more complex than deactivating a trap. Certainly, no hidden keys in chests.
+
+Another important difference is that the Story is less important - basically, the player has been magically teleported to hostile land, and he must fight for his own survival, and go back home. That's it.
+
+There are 4 pools of habilities to choose from: warrior, mage, archer and cleric.
+- Warriors will be masters of the sword. They will rely on high damage output in short distance for survival. They must be mobile to escape from tight spots - their habilities will reflect that. They will not wear bulky armor that would slow them down.
+- Mages are the weakest in close range ... so they avoid it as much as possible. They favour mid-range and AOE(Area of effect) attacks, teleportations, etc. The range and versatility of the spells increases greatly over time.
+- Archers attack mostly from a distance. They have more range than mages, move faster, and have some close-range habilities, too. Sharp eyes allow them to detect traps better than the rest.
+- Clericks are trained to use heavy armor and shields. They are resilient, slow steady. Their habilities include some minor magical habilities. They favour blunt weapons, with which they can bash doors open.
+
+The game plays similarly to how Zelda: A Link to the past did. Ideally, it would be playable with a 6-button pad (keyboard will be an option). Different weapons or spells will have different ranges and effects.
+
+Visually, the game uses a 3/4 top/down perspective, similar to Zelda: ALTTP. The tone is darker: enemies are "less cute", and when they kill the player, he dies(this could be deactivated). The images, fonts, etc will all be 8-bit pixelated.
+
+Permadeath will be activable at the beginning of each game.
+
+## Detailed description
+
+### Game Type/Genre
+
+Battle-cry is a dungeon crawler with zelda-like gameplay and procedurally generated levels.
+
+### Story
 
 ## Scenario
 
-All happened in the blink of an eye. One moment you were living a peaceful life in your village, and the next one you were thrown on these twisted lands.
+All happened in the blink of an eye. One moment you were with your friends and family, and the next one you were standing on these twisted lands.
 
 The stars in the sky are unfamiliar to you. You don't recognize any of the plants you see. The local fauna seems aggresive and dangerous.
 
 You don't know how you got here, but one thing is clear: Your only hope is surviving long enough to find a way back.
 
-You gather the little stuff you have, and prepare for battle.
+You gather the little equipment you have, and prepare for battle.
 
-## Long Description
+## Tone
 
-The game levels will be procedurally generated. Every level will be closed, with only one entry and one exit.
+The is initially neutral, but grows darker as the player advances levels. Its curve is similar to Gouls'n'Ghosts, in which the protagonist starts in a "more or less realistic" world that gradually turns into a nightmarish hell.
 
-Levels will have the usual architectural details:
+Nevertheless, there will be hits of humor here and there. Again, refer to Gouls'n'Ghosts, where the player spends most of its time in pants.
 
-- enemies, of course
-- one single entry and one single exit
+## Objective
+
+The player's ultimate objective is going back home. In order to do this, he must travel through multiple dangerous levels, plaged with monsters.
+
+## Gameplay
+
+### Bootup
+
+(Nice to have) A cinematic - 3 or 4 images with fadeouts, background music, and some text, right when the game starts (Maybe a 2-seconds credit screen). Everything skipable on [key|mouse|button]press.
+
+### Main menu
+
+(Very nice to have) Ideally the main menu should have some sort of animation and visual glee.
+The main menu has the following items:
+
+- Continue (Only visible if there is a game saved)
+- New game
+    - Name:
+    - Permadeath (on/off Default: on)
+    - Tutorial (on/off Default: off)
+    - Start!
+    - Back
+- Load game
+    - List of saved games, if any
+    - Back
+- Options
+    - Sound
+        - SFX Volume
+        - Music Volume
+        - Back
+    - Graphics
+        - Resolution
+        - Full Screen (on/off)
+        - Back
+    - Keyboard
+        - Back
+    - Joypad
+        - Back
+    - Back
+
+The menu is manageable via keyboard (arrows + enter + esc), joypad(arrows + a + b), or mouseclicks.
+
+### Initial game
+
+The player starts up in an empty room. The player is dressed in rags. A low-level weapon (a small dagger, a stick, a torch, or a pile of stones) are nearby.
+
+He'll also know one single low-level spell.
+
+For the most part, the starting room will be a common closed room. The only restrictions are that it can't have monsters. So it can have other loot.
+
+### Movement
+
+The player will be able to move in the cardinal or diagonal directions, using the keyboard or joypad.
+
+There will be 4 "action slots". They will be mapped to actions - usually, weapons or spells.
+
+### In-game menu
+
+The in-game menu will have the following sections
+
+- Inventory
+- Character
+- Game
+    - Save
+    - Load
+    - Quit
+- Options (same options as in main menu)
+    - Sound
+    - Graphics
+    - Keyboard
+    - Joypad
+
+The inventory includes spaces for slots and spells. Initially it's a 50%-50% situation: the player has as many equipment slots as it has for spells.
+
+Later on, depending on the user actions, this configuration might change, ending up in a 10%-90% situation, for example.
+
+Items and spells will be sorted automatically; there will be no way to sort items manually.
+
+There will be a "squared cursor" around the currently selected item. When the cursor hovers an item/spell, a help window will display a brief description, as well as its attributes: armor points for armor, damage points for spells, and so on.
+
+The squared cursor will be movable via the keyboard and pad, as well as the mouse. When an item in the menu is activated, a submenu will appear:
+- Use: potions will be drank, armors will be wear, scrolls will be read
+- Slot: will make possible to assign this item to one of the slots.
+- Drop: to liberate space.
+
+Some items might be stackable - likely potions.
+
+The Character slot will display general information about the character (health, stamina, etc), and the four action slots.
+
+It will also display one slot for every body part capable of wearing wearables - torso, head, left hand, right hand, left finger, right finger, neck. It will also display the 4 quickslots.
+
+For each of those, a menu will pop when activated:
+
+- Examine: Short description of the equipped item, if any
+- Equip...: Change the equipped item. When choosing a new piece of equipment, its statistics will be compared to the current ones, showing changes in red/green (increases/decreases)
+- Drop.
+
+The character screen will also display an image of the player, as well as his statistics (health, stamina, etc) and conditions (dazzled, blinded, etc)
+
+### Evolution
+
+For every creature in the game (including the player) the game will feature several bars:
+- Health: Represented in hearts. When it goes down to 0, the creature dies.
+- Stamina: Goes down with physical exercise - like swinging a weapon, or moving around in a heavy armor.
+- Magic: Goes down by performing magical deeds - like casting spells or using magical items.
+
+For the player, the three of them regenerate; they do it more quickly for a time, after eating food. Potions of Health, Stamina and Magic replenish them faster.
+
+There are other attributes:
+- Strength: Goes up the more Stamina is used in defeating enemies. It affects how fast Stamina is consumed.
+- Will: Goes up the more magic is used with some effect - usually defeating enemies, but also healing (not auto-inflicted wounds!). It affects how fast magic is consumed.
+- Armor: How much pysical damage can the currently worn armor can absorb.
+- Speed: How fast the creature can move. Increases with movement. Decreases with armor weight.
+- Resistances to any type of damage (see below)
+- Dexterities
 
 
+
+#### Types of damage
+
+- Piercing
+- Blunt
+- Slashing
+- Light
+- Darkness
+- Fire
+- Cold
+- Acid
+- Venom
+
+#### Dexterities
+
+At certain points,
+
+- Archery: Users of this hability can use arrows, throwing knifes, and other pointy long-distance weapons.
+    1. 50% more damage with piercing weapons
+    2. 25% chance of provoking bleeding (only applies to creatures with blood)
+    3. 25% chance of ignoring armor
+    4. 25% chance of impaling (going through the body of each target)
+    5. Arrows bounce around corners 3 times.
+- Blunt weapons: Maces, hammers, morningstars
+    1. Blunt weapons do 50% more damage
+    2. Blunt weapons have a 50% chance of knoking out enemies (only applies to creatures with a physical brain and body)
+    3. Enemies can be knocked back with a 50% chance (only applies to creatures with less mass than the user)
+    4. Knocked back enemies can knock back other enemies.
+    5. Blunt weapons have a 3-tiles area-of-effect in front of the player.
+- Slashing weapons: Swords, knifes
+    1. Slashing weapons do 50% more damage
+    2. 25% chance of deflecting attacks, if facing them.
+    3. When next to a wall, slashing attacks do double damage.
+    4. When next to 2 enemies or more, slashing attacks do double damage.
+    5. Legend: Slashing and deflection have a 5-tile AOE range, related to where the player is facing.
+- Light spells:
+    1. Flash: A bright, brief, spark of light. Can temporary blind creatures.
+    2. Healing: It heals 1 heart on live creatures. If facing one creature, it applies to it. Otherwise, it applies to self. Damages undead.
+    3. Purge poison: Removes poison from organism.
+    4. UltraHeal: Heal instantly to 100%. Costs all available mana. Can instantly kill any undead.
+    5. Resurrection: A dead creature can return to life. He returns with full health and full mana, but temporary blind.
+- Darkness spells:
+    TBD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
 
 The player will be able to choose from a tree of dexterities, which would be grouped into 4 types: mage, archer, warrior and paladin.
 
