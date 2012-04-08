@@ -201,6 +201,10 @@ At certain points,
     3. When next to a wall, slashing attacks do double damage.
     4. When next to 2 enemies or more, slashing attacks do double damage.
     5. Legend: Slashing and deflection have a 5-tile AOE range, related to where the player is facing.
+- Heavy armor
+    TBD
+- Shields
+    TBD
 - Light spells:
     1. Flash: A bright, brief, spark of light. Can temporary blind creatures.
     2. Healing: It heals 1 heart on live creatures. If facing one creature, it applies to it. Otherwise, it applies to self. Damages undead.
@@ -208,32 +212,19 @@ At certain points,
     4. UltraHeal: Heal instantly to 100%. Costs all available mana. Can instantly kill any undead.
     5. Resurrection: A dead creature can return to life. He returns with full health and full mana, but temporary blind.
 - Darkness spells:
-    TBD
+    1. Poison dart
+    2. Drain
+    3. Invisibility
+    4. Possess
+    6. Raise undead
 
 
 
+### Enemy AI
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-...
-
-The player will be able to choose from a tree of dexterities, which would be grouped into 4 types: mage, archer, warrior and paladin.
-
-## Game System
-
-> What rules does the game implement? What objects need to be defined, what events need to be raised, and what actions are fired for each event?
-> It may be useful to break the objects down into subcategories - player character, 'non-player characters' (e.g. 'monsters'), room objects (walls, doors), scoring/health objects (treasure, fuel pellets, first aid kits etc.), controller objects etc.
+- Simple: Choose closest target, approach, attack
+- Medium: Choose strongest target, choose best attack, approach, attack, retire
+- Smart: Same as before, but with AOE attacks (wizards, etc)
 
 ### Environment
 
@@ -332,22 +323,19 @@ The amount and type of enemies in a level will be persisted. Their position will
     - Their items are cursed with an insanity related jinx - such as temporal craziness.
 - Ull follower: Ull the Healer is the force of change, and at the same time is the force of restoration. These individuals will heal enemies. In some occasions they will rise marbh.
     - Their loot includes potions, and scrolls of healing, but also necromantic material.
-- mass: a revolting pile of moving flesh, bones and teeth.
+- Mass: a revolting pile of moving flesh, bones and teeth.
     - Not especially tough or intelligent, but regenerates health quickly.
     - Can devour pieces of equipment.
-- Drakin: very skilled blind warriors. They use swords on the short distances and arcs on the long distances.
+- Uruk: very skilled blind warriors. They use swords on the short distances and arcs on the long distances.
     - Decent armor and weapons, but nothing heavy.
-- Ieli: Massive creatures that
+- Drakin: a civilisation of lizardmen. They excel in bulky armor, and some fire-related magic.
+- Ieli: Massive creatures that live in very cold environments. They attack on sight.
 
 #### Tier 4
 
-### The player
+TBD
 
 ### Items
-
-## Narrative Structure
-
-> How is the story structured? Draw the plotline using a graph to show how major story events are connected to each other...
 
 ## Game Play
 
