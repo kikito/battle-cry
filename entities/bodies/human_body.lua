@@ -14,7 +14,7 @@ local function loadAnimations(self)
     walk = {
       up    = anim8.newAnimation('loop', g('2-8,1'),      0.1),
       right = anim8.newAnimation('loop', g('2-8,2', 1,2), 0.08),
-      down  = anim8.newAnimation('loop', g('2-8,3'),      0.1),
+      down  = anim8.newAnimation('loop', g('2-9,3'),      0.1),
       left  = anim8.newAnimation('loop', g('2-8,4', 1,4), 0.08)
     },
     idle = {
