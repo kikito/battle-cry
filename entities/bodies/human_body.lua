@@ -12,9 +12,9 @@ local function loadAnimations(self)
   local g = anim8.newGrid(32, 32, self.image:getWidth(), self.image:getHeight())
   self.animations = {
     walk = {
-      up    = anim8.newAnimation('loop', g('2-8,1'),      0.1),
+      up    = anim8.newAnimation('loop', g('2-9,1'),      0.08),
       right = anim8.newAnimation('loop', g('2-8,2', 1,2), 0.08),
-      down  = anim8.newAnimation('loop', g('2-9,3'),      0.1),
+      down  = anim8.newAnimation('loop', g('2-9,3'),      0.08),
       left  = anim8.newAnimation('loop', g('2-8,4', 1,4), 0.08)
     },
     idle = {
