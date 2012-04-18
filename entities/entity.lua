@@ -51,15 +51,16 @@ end
 
 --------------------------------------
 
-function Entity:initialize(body)
+function Entity:initialize(mind, body)
+  self.mind = mind
   self.body = body
-  self.want = {}
   add(self, self.class)
 end
 
 function Entity:destroy()
   remove(self, self.class)
   self.body:destroy()
+  self.mind:destroy()
 end
 
 function Entity:draw()
@@ -67,7 +68,8 @@ function Entity:draw()
 end
 
 function Entity:update(dt)
-  self.body:update(self.want, dt)
+  self.mind:update(dt)
+  self.body:update(self.mind.want, dt)
 end
 
 return Entity
