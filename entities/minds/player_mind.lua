@@ -12,7 +12,6 @@ function PlayerMind:initialize()
       beholder.observe('stop_player_action',  action, function() self.want[action] = false end)
     end
   end)
-
 end
 
 function PlayerMind:destroy()
