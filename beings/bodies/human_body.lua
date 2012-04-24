@@ -3,7 +3,7 @@ local anim8      = require 'lib.anim8'
 local Stateful   = require 'lib.stateful'
 
 local Game       = require 'game'
-local MobileBody = require 'entities.bodies.mobile_body'
+local MobileBody = require 'beings.bodies.mobile_body'
 
 local HumanBody = class('HumanBody', MobileBody):include(Stateful)
 

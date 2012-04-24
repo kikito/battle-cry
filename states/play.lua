@@ -1,6 +1,6 @@
 
-local Player = require 'entities.player'
-local Entity = require 'entities.entity'
+local Player = require 'beings.player'
+local Being  = require 'beings.being'
 local Map    = require 'geometry.map'
 
 local Game = require 'game'
@@ -16,18 +16,18 @@ end
 function Play:exitedState()
   self.player = nil
   self.map = nil
-  Entity:destroyAll()
+  Being:destroyAll()
 end
 
 function Play:draw()
   self.map:draw()
   local x,y = self.map:toWorld(self.cell.x, self.cell.y)
   love.graphics.rectangle('line', x, y, 32, 32)
-  Entity:drawAll()
+  Being:drawAll()
 end
 
 function Play:update(dt)
-  Entity:updateAll(dt)
+  Being:updateAll(dt)
   local px, py = self.player.body:getPosition()
   self.cell.x, self.cell.y = self.map:getContainingCell(self.player.body:getFeetPosition())
 end

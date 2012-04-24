@@ -1,5 +1,5 @@
 local beholder    = require 'lib.beholder'
-local Mind        = require 'entities.minds.mind'
+local Mind        = require 'beings.minds.mind'
 
 local PlayerMind = class('PlayerMind', Mind)
 

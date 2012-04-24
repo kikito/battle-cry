@@ -1,6 +1,6 @@
 local beholder = require 'lib.beholder'
 
-local Entity = class('Entity')
+local Being = class('Entity')
 
 local function clone(t)
   local result = {}
@@ -29,47 +29,47 @@ local function applyMethod(collection, method, ...)
   end
 end
 
-function Entity.static:applyMethodSafely(method, ...)
+function Being.static:applyMethodSafely(method, ...)
   applyMethod(clone(self._instances), method, ...)
 end
 
-function Entity.static:applyMethod(method, ...)
+function Being.static:applyMethod(method, ...)
   applyMethod(self._instances, method, ...)
 end
 
-function Entity.static:drawAll()
+function Being.static:drawAll()
   self:applyMethod('draw')
 end
 
-function Entity.static:updateAll(dt)
+function Being.static:updateAll(dt)
   self:applyMethodSafely('update', dt)
 end
 
-function Entity.static:destroyAll()
+function Being.static:destroyAll()
   self:applyMethodSafely('destroy')
 end
 
 --------------------------------------
 
-function Entity:initialize(mind, body)
+function Being:initialize(mind, body)
   self.mind = mind
   self.body = body
   add(self, self.class)
 end
 
-function Entity:destroy()
+function Being:destroy()
   remove(self, self.class)
   self.body:destroy()
   self.mind:destroy()
 end
 
-function Entity:draw()
+function Being:draw()
   self.body:draw()
 end
 
-function Entity:update(dt)
+function Being:update(dt)
   self.mind:update(dt)
   self.body:update(self.mind.want, dt)
 end
 
-return Entity
+return Being

@@ -1,4 +1,3 @@
-
 local Body = class('Body')
 
 function Body:initialize(x,y)
