@@ -1,7 +1,7 @@
 
 local Player = require 'beings.player'
 local Being  = require 'beings.being'
-local Map    = require 'geometry.map'
+local Map    = require 'world.map'
 
 local Game = require 'game'
 local Play = Game:addState('Play')
