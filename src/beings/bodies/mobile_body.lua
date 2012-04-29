@@ -1,4 +1,4 @@
-local Body       = require('beings.bodies.body')
+local Body       = require('src.beings.bodies.body')
 
 local MobileBody = class('MobileBody', Body)
 

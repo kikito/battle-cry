@@ -1,6 +1,6 @@
-local Game     = require 'game'
 local Menu     = require 'lib.menu'
-local MainMenu = require 'states.main_menu'
+local Game     = require 'src.game.game'
+local MainMenu = require 'src.game.states.main_menu'
 
 local KeyboardMenu = Game:addState('KeyboardMenu', MainMenu)
 

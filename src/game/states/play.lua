@@ -1,9 +1,8 @@
+local Player = require 'src.beings.player'
+local Being  = require 'src.beings.being'
+local Map    = require 'src.world.map'
 
-local Player = require 'beings.player'
-local Being  = require 'beings.being'
-local Map    = require 'world.map'
-
-local Game = require 'game'
+local Game = require 'src.game.game'
 local Play = Game:addState('Play')
 
 

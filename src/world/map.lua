@@ -1,4 +1,4 @@
-local Grass = require('world.tiles.grass')
+local Grass = require('src.world.tiles.grass')
 
 local Map = class('Map')
 

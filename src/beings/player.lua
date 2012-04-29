@@ -1,6 +1,6 @@
-local Being       = require 'beings.being'
-local PlayerMind  = require 'beings.minds.player_mind'
-local HumanBody   = require 'beings.bodies.human_body'
+local Being       = require 'src.beings.being'
+local PlayerMind  = require 'src.beings.minds.player_mind'
+local HumanBody   = require 'src.beings.bodies.human_body'
 
 local Player = class('Player', Being)
 

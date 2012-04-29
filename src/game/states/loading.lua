@@ -1,6 +1,8 @@
 local loader = require 'lib.love-loader'
 
-local Game = require 'game'
+local Game  = require 'src.game.game'
+local Media = require 'src.media'
+
 local Loading = Game:addState('Loading')
 
 function readMediaList(f, holder, folder)
@@ -17,10 +19,7 @@ end
 
 function Loading:enteredState()
   self:log('Entered Loading')
-  Game.static.media = {
-    images  = {}
-  }
-  readMediaList(loader.newImage, Game.media.images, 'media/images')
+  readMediaList(loader.newImage, Media.images, 'media/images')
 
   loader.start(function() self:gotoState("MainMenu") end)
 end

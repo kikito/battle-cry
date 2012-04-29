@@ -3,14 +3,7 @@ local cron     = require 'lib.cron'
 local beholder = require 'lib.beholder'
 
 -- game & gamestate requires
-local Game = require 'game'
-require 'states.loading'
-require 'states.main_menu'
-require 'states.options_menu'
-require 'states.keyboard_menu'
-require 'states.choosing_key'
-require 'states.play'
-require 'states.not_implemented'
+local Game = require 'src.game'
 
 local game
 
