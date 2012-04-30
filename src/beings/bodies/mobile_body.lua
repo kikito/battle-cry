@@ -10,17 +10,17 @@ local deltasByDirection = {
 }
 
 function MobileBody:initialize(x,y)
-  Body.setPosition(self, x,y)
+  Body.initialize(self, x,y)
 end
 
 function MobileBody:getVelocity()
   return self.vx, self.vy
 end
 
-function MobileBody:prepareMove(want)
+function MobileBody:prepareMove(wishes)
   local dx, dy = 0,0
   for dir,delta in pairs(deltasByDirection) do
-    if want[dir] then
+    if wishes[dir] then
       dx = dx + delta[1]
       dy = dy + delta[2]
       self.facing = dir

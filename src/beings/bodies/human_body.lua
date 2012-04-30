@@ -47,11 +47,12 @@ end
 
 local Idle = HumanBody:addState('Idle')
 
-function Idle:update(want, dt)
-  self:prepareMove(want)
+function Idle:update(wishes, dt)
+  MobileBody.update(self, wishes, dt)
+  self:prepareMove(wishes)
   if self:isMoving() then
     self:gotoState('Walking')
-    self:update(want, dt)
+    self:update(wishes, dt)
   end
 end
 
@@ -65,10 +66,12 @@ function Walking:enteredState()
   self:getCurrentAnimation():gotoFrame(1)
 end
 
-function Walking:update(want, dt)
+function Walking:update(wishes, dt)
+  MobileBody.update(self, wishes, dt)
+
   local prevFacing = self.facing
 
-  self:prepareMove(want)
+  self:prepareMove(wishes)
 
   if not self:isMoving() then self:gotoState('Idle') end
 

@@ -1,7 +1,7 @@
 local Mind = class('Mind')
 
 function Mind:initialize()
-  self.want = {}
+  self.wishes = {}
 end
 
 function Mind:update(dt)
