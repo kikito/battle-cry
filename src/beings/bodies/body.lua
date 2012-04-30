@@ -1,8 +1,15 @@
-local Body = class('Body')
+local Apply = require 'lib.apply'
+
+local Body = class('Body'):include(Apply)
 
 function Body:initialize(x,y)
   self.senses = {}
   self:setPosition(x,y)
+  self.class:addInstance(self)
+end
+
+function Body:destroy()
+  self.class:removeInstance(self)
 end
 
 function Body:setPosition(x,y)
@@ -14,11 +21,19 @@ function Body:getPosition()
 end
 
 function Body:update(wishes, dt)
-  self.senses.x = self.x
-  self.senses.y = self.y
+  self:sense()
 end
 
-function Body:destroy()
+function Body:sense()
+  self.senses.x = self.x
+  self.senses.y = self.y
+  self.senses.sight = {}
+  Body:applyMethod('getPerceivedBy', self)
 end
+
+function Body:getPerceivedBy(perceiver)
+  perceiver.senses.sight[self] = {x=self.x, y=self.y}
+end
+
 
 return Body

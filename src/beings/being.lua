@@ -34,8 +34,8 @@ function Being:draw()
 end
 
 function Being:update(dt)
-  self.mind:update(self.body.senses, dt)
   self.body:update(self.mind.wishes, dt)
+  self.mind:update(self.body.senses, dt)
 end
 
 return Being
