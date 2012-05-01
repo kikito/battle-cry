@@ -26,7 +26,7 @@ end
 
 function Game:exit()
   self:log("Goodbye!")
-  love.event.push('q')
+  love.event.quit()
 end
 
 -- Also include "default safe" methods for the callbacks
