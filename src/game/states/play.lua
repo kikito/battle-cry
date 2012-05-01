@@ -30,8 +30,7 @@ end
 
 function Play:update(dt)
   Being:updateAll(dt)
-  local px, py = self.player.body:getPosition()
-  self.cell.x, self.cell.y = self.map:getContainingCell(self.player.body:getFeetPosition())
+  self.cell.x, self.cell.y = self.map:getContainingCell(self.player.body:getPosition())
 end
 
 function Play:escape()
