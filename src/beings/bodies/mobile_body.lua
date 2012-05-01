@@ -9,6 +9,8 @@ local deltasByDirection = {
   right = { 1,  0 }
 }
 
+local diagonalCoefficient = math.sin(1)
+
 function MobileBody:initialize(x,y)
   Body.initialize(self, x,y)
 end
@@ -26,8 +28,9 @@ function MobileBody:prepareMove(wishes)
       self.facing = dir
     end
   end
-  self.vx = self.speed * dx
-  self.vy = self.speed * dy
+  local coefficient = (dx * dy == 0) and 1 or diagonalCoefficient
+  self.vx = self.speed * dx * coefficient
+  self.vy = self.speed * dy * coefficient
 end
 
 function MobileBody:move(dt)
