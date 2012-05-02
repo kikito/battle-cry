@@ -8,10 +8,9 @@ local Play = Game:addState('Play')
 
 
 function Play:enteredState()
-  self.cell = {x=0,y=0}
-  self.player   = Player:new(100, 100)
-  self.follower = Follower:new(self.player.body, 500,200)
-  self.map =    Map:new(20,10)
+  self.map      = Map:new(20,10)
+  self.player   = Player:new(self.map, 100, 100)
+  self.follower = Follower:new(self.map, self.player.body, 500,200)
 end
 
 function Play:exitedState()
@@ -21,16 +20,35 @@ function Play:exitedState()
   Being:destroyAll()
 end
 
+local function drawTile(tile, body)
+  if tile:isPassableBy(body) then
+    love.graphics.setColor(255,255,255)
+  else
+    love.graphics.setColor(255,0,0)
+  end
+  love.graphics.rectangle('line', tile.wx, tile.wy, 32,32)
+end
+
 function Play:draw()
+  love.graphics.setColor(255,255,255)
   self.map:draw()
-  local x,y = self.map:toWorld(self.cell.x, self.cell.y)
-  love.graphics.rectangle('line', x, y, 32, 32)
+  love.graphics.rectangle('line', self.player.body:getBoundingBox())
+
+  local ul,ur,dl,dr = self.map:getContainingTiles(self.player.body:getBoundingBox())
+  drawTile(ul)
+  drawTile(ur)
+  drawTile(dl)
+  drawTile(dr)
+
+  love.graphics.print(("%d %d %d %d"):format(self.player.body:getBoundingBox()), 40, 500)
+
   Being:drawAll()
+
+  local x,y = self.player.body:getPosition()
 end
 
 function Play:update(dt)
   Being:updateAll(dt)
-  self.cell.x, self.cell.y = self.map:getContainingCell(self.player.body:getPosition())
 end
 
 function Play:escape()

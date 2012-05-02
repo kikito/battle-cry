@@ -26,14 +26,18 @@ local function loadAnimations(self)
   }
 end
 
-function HumanBody:initialize(x,y,facing,speed)
-  MobileBody.initialize(self, x,y)
+function HumanBody:initialize(map,x,y,facing,speed)
+  MobileBody.initialize(self, map,x,y)
 
   loadAnimations(self)
 
   self.facing = facing
   self.speed  = speed
   self:gotoState('Idle')
+end
+
+function HumanBody:getBoundingBox()
+  return self.x - 8, self.y - 4, 16, 8
 end
 
 function HumanBody:draw()

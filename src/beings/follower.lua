@@ -4,10 +4,10 @@ local HumanBody    = require 'src.beings.bodies.human_body'
 
 local Follower = class('Follower', Being)
 
-function Follower:initialize(subject, x,y)
+function Follower:initialize(map,subject,x,y)
   Being.initialize( self,
                     FollowerMind:new(subject),
-                    HumanBody:new(x,y, 'left', 40) )
+                    HumanBody:new(map,x,y, 'left', 40) )
 end
 
 return Follower

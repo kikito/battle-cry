@@ -2,8 +2,9 @@ local Apply = require 'lib.apply'
 
 local Body = class('Body'):include(Apply)
 
-function Body:initialize(x,y)
+function Body:initialize(map, x,y)
   self.senses = {}
+  self.map = map
   self:setPosition(x,y)
   self.class:addInstance(self)
 end
