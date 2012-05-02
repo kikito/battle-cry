@@ -9,7 +9,8 @@ local grid = anim8.newGrid(TileWidth, TileHeight, 1024, 1024)
 
 function Tile:initialize(map,x,y,quadX, quadY)
   self.x, self.y = x,y
-  self.wx, self.wy = map:toWorld(x,y)
+  self.left,  self.top    = map:toWorld(x,y)
+  self.right, self.bottom = self.left + TileWidth, self.top + TileHeight
   self.image = Media.images.tiles
   self.quad = grid(quadX, quadY)[1]
 end
@@ -19,26 +20,12 @@ function Tile:isPassableBy(entity)
 end
 
 function Tile:draw()
-  love.graphics.drawq(self.image, self.quad, self.wx, self.wy)
+  love.graphics.drawq(self.image, self.quad, self.left, self.top)
 end
 
-
-function Tile:worldLeft()
-  return self.wx
+function Tile:getBoundingBox()
+  return self.left, self.top, self.right - self.left, self.bottom - self.top
 end
-
-function Tile:worldRight()
-  return self.wx + TileWidth
-end
-
-function Tile:worldTop()
-  return self.wy
-end
-
-function Tile:worldBottom()
-  return self.wy + TileHeight
-end
-
 
 
 local Grass = class('Grass', Tile)

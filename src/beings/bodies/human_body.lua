@@ -7,9 +7,11 @@ local MobileBody = require 'src.beings.bodies.mobile_body'
 
 local HumanBody = class('HumanBody', MobileBody):include(Stateful)
 
+local spriteW, spriteH = 32, 32
+
 local function loadAnimations(self)
   self.image  = Media.images.sprite
-  local g = anim8.newGrid(32, 32, self.image:getWidth(), self.image:getHeight())
+  local g = anim8.newGrid(spriteW, spriteH, self.image:getWidth(), self.image:getHeight())
   self.animations = {
     walk = {
       up    = anim8.newAnimation('loop', g('2-9,1'), 0.08),
@@ -27,7 +29,7 @@ local function loadAnimations(self)
 end
 
 function HumanBody:initialize(map,x,y,facing,speed)
-  MobileBody.initialize(self, map,x,y)
+  MobileBody.initialize(self, map,x,y,16,8)
 
   loadAnimations(self)
 
@@ -36,13 +38,9 @@ function HumanBody:initialize(map,x,y,facing,speed)
   self:gotoState('Idle')
 end
 
-function HumanBody:getBoundingBox()
-  return self.x - 8, self.y - 4, 16, 8
-end
-
 function HumanBody:draw()
-  local x, y = self:getPosition()
-  self:getCurrentAnimation():draw(self.image, x-16, y-26)
+  local x, y = math.floor(self.x), math.floor(self.y)
+  self:getCurrentAnimation():draw(self.image, x-spriteW/2, y-26)
 end
 
 local Idle = HumanBody:addState('Idle')

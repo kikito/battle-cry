@@ -11,12 +11,12 @@ local deltasByDirection = {
 
 local diagonalCoefficient = math.sin(1)
 
-function MobileBody:initialize(map,x,y)
+function MobileBody:initialize(map,x,y,width,height)
   Body.initialize(self,map,x,y)
-end
-
-function MobileBody:getVelocity()
-  return self.vx, self.vy
+  self.width = width
+  self.height = height
+  self.halfWidth = width/2
+  self.halfHeight = height/2
 end
 
 function MobileBody:prepareMove(wishes)
@@ -35,35 +35,51 @@ function MobileBody:prepareMove(wishes)
 end
 
 function MobileBody:getBoundingBox()
-  return 0,0,0,0
+  return self.x - self.halfWidth,
+         self.y - self.halfHeight,
+         self.width,
+         self.height
+end
+
+function MobileBody:getBlocks()
+  local x,y,w,h = self:getBoundingBox()
+  local tl, tr, bl, br = self.map:getContainingTiles(x,y,w,h)
+  local tlp, trp, blp, brp =
+    tl:isPassableBy(self),
+    tr:isPassableBy(self),
+    bl:isPassableBy(self),
+    br:isPassableBy(self)
+
+  return not(trp and brp), -- rightBlock
+         not(tlp and blp), -- leftBlock
+         not(trp and tlp), -- topBlock
+         not(brp and blp)  -- bottomBlock
 end
 
 function MobileBody:move(dt)
-  local vx, vy = self:getVelocity()
-  local x, y = self:getPosition()
-  local x2,y2 = x + vx*dt, y + vy*dt
+  local tile = self.map:getContainingTile(self.x, self.y)
 
-  local bx,by,w,h = self:getBoundingBox()
-  local ul, ur, dl, dr = self.map:getContainingTiles(bx,by,w,h)
+  self.x = self.x + self.vx*dt
+  self.y = self.y + self.vy*dt
 
-  if     vx > 0 and not (dr:isPassableBy(self) and ur:isPassableBy(self)) then
-    x2 = ur:worldLeft() - w/2 - 1
-  elseif vx < 0 and not (dl:isPassableBy(self) and ul:isPassableBy(self)) then
-    x2 = ul:worldRight() + w/2 + 1
+  local rBlock, lBlock, tBlock, bBlock = self:getBlocks()
+
+  if     self.vx > 0 and rBlock then
+    self.x = tile.right - self.halfWidth - 1
+  elseif self.vx < 0 and lBlock then
+    self.x = tile.left + self.halfWidth + 1
   end
 
-  if     vy > 0 and not (dr:isPassableBy(self) and dl:isPassableBy(self)) then
-    y2 = dr:worldTop() - h/2 - 1
-  elseif vy < 0 and not (ur:isPassableBy(self) and ul:isPassableBy(self)) then
-    y2 = ur:worldBottom() + h/2 + 1
+  if     self.vy > 0 and bBlock then
+    self.y = tile.bottom - self.halfHeight - 1
+  elseif self.vy < 0 and tBlock then
+    self.y = tile.top + self.halfHeight + 1
   end
 
-  self:setPosition(x2, y2)
 end
 
 function MobileBody:isMoving()
-  local vx, vy = self:getVelocity()
-  return vx ~= 0 or vy ~= 0
+  return self.vx ~= 0 or self.vy ~= 0
 end
 
 
