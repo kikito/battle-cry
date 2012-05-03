@@ -41,40 +41,39 @@ function MobileBody:getBoundingBox()
          self.height
 end
 
-function MobileBody:getBlocks()
-  local x,y,w,h = self:getBoundingBox()
-  local tl, tr, bl, br = self.map:getContainingTiles(x,y,w,h)
-  local tlp, trp, blp, brp =
-    tl:isPassableBy(self),
-    tr:isPassableBy(self),
-    bl:isPassableBy(self),
-    br:isPassableBy(self)
-
-  return not(trp and brp), -- rightBlock
-         not(tlp and blp), -- leftBlock
-         not(trp and tlp), -- topBlock
-         not(brp and blp)  -- bottomBlock
+local function canPass(self,x,y)
+  return self.map:getContainingTile(x,y):isPassableBy(self)
 end
 
 function MobileBody:move(dt)
+
+  local vx, vy = self.vx, self.vy
+
+  if vx == 0 and vy == 0 then return end
+
+  local dx, dy = vx * dt, vy * dt
+  local w2,h2 = self.halfWidth, self.halfHeight
+  local x,y,w,h = self:getBoundingBox()
   local tile = self.map:getContainingTile(self.x, self.y)
 
-  self.x = self.x + self.vx*dt
-  self.y = self.y + self.vy*dt
-
-  local rBlock, lBlock, tBlock, bBlock = self:getBlocks()
-
-  if     self.vx > 0 and rBlock then
-    self.x = tile.right - self.halfWidth - 1
-  elseif self.vx < 0 and lBlock then
-    self.x = tile.left + self.halfWidth + 1
+  if vx ~= 0 then -- moving left or right
+    local futureX = x + dx + (vx > 0 and w or 0)
+    if canPass(self, futureX, y) and canPass(self, futureX, y + h) then
+      self.x = self.x + dx
+    else
+      self.x = vx > 0 and (tile.right - w2 - 1) or (tile.left + w2)
+    end
   end
 
-  if     self.vy > 0 and bBlock then
-    self.y = tile.bottom - self.halfHeight - 1
-  elseif self.vy < 0 and tBlock then
-    self.y = tile.top + self.halfHeight + 1
+  if vy ~= 0 then -- moving up or down
+    local futureY = y + dy + (vy > 0 and h or 0)
+    if canPass(self, x, futureY) and canPass(self, x + w, futureY) then
+      self.y = self.y + dy
+    else
+      self.y = vy > 0 and (tile.bottom - h2 - 1) or (tile.top + h2)
+    end
   end
+  -- TODO: this might not work when impacting one diagonal precisely
 
 end
 
