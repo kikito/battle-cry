@@ -13,7 +13,8 @@ function Map:initialize(width, height)
   for x=1,width do
     self.tiles[x]={}
     for y=1,height do
-      if x==1 or y==1 or x==width or y==height then
+      if x==1 or y==1 or x==width or y==height or
+         5 <= x and x <= 10 and 5 <= y and y <= 7 then
         self.tiles[x][y] = tiles.Wall:new(self,x,y)
       else
         self.tiles[x][y] = tiles.Grass:new(self,x,y)
