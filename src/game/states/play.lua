@@ -6,6 +6,8 @@ local Map      = require 'src.world.map'
 local Game = require 'src.game.game'
 local Play = Game:addState('Play')
 
+local bresenham = require 'lib.bresenham'
+
 
 function Play:enteredState()
   self.map      = Map:new(20,10)
@@ -27,7 +29,20 @@ function Play:draw()
 
   local x,y = self.player.body.x, self.player.body.y
 
-  love.graphics.rectangle('line', self.map:getContainingTile(x,y):getBoundingBox())
+  local pTile = self.map:getContainingTile(x,y)
+
+  local line, found = bresenham.line(15, 3, pTile.x, pTile.y, function(x,y)
+    return not self.map.tiles[x][y].solid
+  end)
+
+  if not found then love.graphics.setColor(255,0,0) end
+
+  for i=1,#line do
+    local tile = self.map.tiles[line[i][1]][line[i][2]]
+    love.graphics.rectangle('line', tile:getBoundingBox())
+  end
+
+  love.graphics.setColor(255,255,255)
 
 
   Being:drawAll()
