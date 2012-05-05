@@ -39,6 +39,7 @@ local Wall = class('Wall', Tile)
 function Wall:initialize(map,x,y)
   Tile.initialize(self,map,x,y, 2,1)
   self.solid = true
+  self.opaque = true
 end
 
 return {

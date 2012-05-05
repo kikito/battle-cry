@@ -1,3 +1,5 @@
+local bresenham = require 'lib.bresenham'
+
 local tiles = require('src.world.tiles')
 
 local Map = class('Map')
@@ -47,14 +49,11 @@ function Map:getContainingTile(wx, wy)
   return self.tiles[x][y]
 end
 
--- ul, ur, dl, dr
-function Map:getContainingTiles(wx,wy,w,h)
-  return self:getContainingTile(wx,   wy),
-         self:getContainingTile(wx+w, wy),
-         self:getContainingTile(wx,   wy+h),
-         self:getContainingTile(wx+w, wy+h)
+function Map:los(x0,y0, x1,y1)
+  return bresenham.los(x0,y0,x1,y1, function(x,y)
+    return not self.tiles[x][y].opaque
+  end)
 end
-
 
 
 
