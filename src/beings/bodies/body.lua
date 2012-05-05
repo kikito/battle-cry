@@ -33,8 +33,10 @@ function Body:sense()
 end
 
 function Body:getPerceivedBy(perceiver)
-  local myTile, hisTile = self:getContainingTile(), perceiver:getContainingTile()
-  if self.map:los(hisTile.x, hisTile.y, myTile.x, myTile.y) then
+  local x0,y0 = self.map:toMap(perceiver.x, perceiver.y)
+  local x1,y1 = self.map:toMap(self.x, self.y)
+
+  if self.map:los(x0,y0,x1,y1) then
     perceiver.senses.sight[self] = {x=self.x, y=self.y}
   end
 end

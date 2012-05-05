@@ -10,9 +10,9 @@ local bresenham = require 'lib.bresenham'
 
 
 function Play:enteredState()
-  self.map      = Map:new(20,10)
+  self.map      = Map:new()
   self.player   = Player:new(self.map, 100, 100)
-  self.follower = Follower:new(self.map, self.player.body, 500,250)
+  self.follower = Follower:new(self.map, self.player.body, 580,450)
 end
 
 function Play:exitedState()

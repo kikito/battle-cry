@@ -2,27 +2,59 @@ local bresenham = require 'lib.bresenham'
 
 local tiles = require('src.world.tiles')
 
-local Map = class('Map')
-
 local tileWidth, tileHeight = 32, 32
 
 local floor = math.floor
 
-function Map:initialize(width, height)
-  self.width = width
-  self.height = height
+local str = [[
+#########################
+#      v                #
+#      v                #
+#      v                #
+#      v                #
+#      v                #
+#      v                #
+#      v                #
+#      v                #
+#      v       ##########
+#      v       #        #
+#      v       #        #
+#      v       $        #
+#      v   v   $        #
+#      v   v   $        #
+#      v   v   #        #
+#          v   #####    #
+#          v            #
+#########################
+]]
+
+local legend = {
+  [' '] = tiles.Grass,
+  ['#'] = tiles.Wall,
+  ['v'] = tiles.Hole,
+  ['$'] = tiles.Glass
+}
+
+local Map = class('Map')
+
+function Map:initialize()
+  self.width = #(str:match("[^\n]+"))
   self.tiles = {}
-  for x=1,width do
-    self.tiles[x]={}
-    for y=1,height do
-      if x==1 or y==1 or x==width or y==height or
-         5 <= x and x <= 10 and 5 <= y and y <= 7 then
-        self.tiles[x][y] = tiles.Wall:new(self,x,y)
-      else
-        self.tiles[x][y] = tiles.Grass:new(self,x,y)
-      end
+
+  for x = 1,self.width,1 do self.tiles[x] = {} end
+
+  local x,y,left,top = 1,1
+  for row in str:gmatch("[^\n]+") do
+    assert(#row == self.width, "invalid row: {" .. row .. "}")
+    x = 1
+    for character in row:gmatch(".") do
+      left, top = self:toWorld(x,y)
+      self.tiles[x][y] = legend[character]:new(x,y,left,top)
+      x = x + 1
     end
+    y=y+1
   end
+  self.height = y - 1
 end
 
 function Map:draw(minx, miny, width, height)
