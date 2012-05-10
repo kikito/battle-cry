@@ -1,5 +1,5 @@
 local function toRequirePath(fsPath)
-  return fsPath:gsub('\.lua',''):gsub('\/','.')
+  return fsPath:gsub('%.lua',''):gsub('/','.')
 end
 
 
@@ -8,6 +8,6 @@ end
 return function(dirPath)
   local fileNames = love.filesystem.enumerate(dirPath)
   for _,fileName in ipairs(fileNames) do
-    require(toRequirePath(dirPath .. '/' .. fileName))
+    require(toRequirePath(dirPath .. '.' .. fileName))
   end
 end
