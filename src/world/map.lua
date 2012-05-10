@@ -8,11 +8,11 @@ local floor = math.floor
 
 local str = [[
 #########################
-#      v                #
-#      v                #
-#      v                #
-#      v                #
-#      v                #
+#      v      #         #
+#      v      #         #
+#      v      #         #
+#      v      #         #
+#      v      #         #
 #      v                #
 #      v                #
 #      v                #

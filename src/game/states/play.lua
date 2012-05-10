@@ -1,5 +1,6 @@
 local Player   = require 'src.beings.player'
 local Follower = require 'src.beings.follower'
+local Ptero    = require 'src.beings.ptero'
 local Being    = require 'src.beings.being'
 local Map      = require 'src.world.map'
 
@@ -8,22 +9,22 @@ local Play = Game:addState('Play')
 
 local bresenham = require 'lib.bresenham'
 
+local map
 
 function Play:enteredState()
-  self.map      = Map:new()
-  self.player   = Player:new(self.map, 100, 100)
-  self.follower = Follower:new(self.map, self.player.body, 580,450)
+  map            = Map:new()
+  local player   = Player:new(map, 100, 100)
+  Follower:new(map, player.body, 580,450)
+  Ptero:new(map, player.body, 600, 200)
 end
 
 function Play:exitedState()
-  self.player = nil
-  self.map = nil
-  self.follower = nil
+  map = nil
   Being:destroyAll()
 end
 
 function Play:draw()
-  self.map:draw()
+  map:draw()
   Being:drawAll()
 end
 

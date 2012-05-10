@@ -16,7 +16,11 @@ function Tile:initialize(x,y,left,top,quadX, quadY)
 end
 
 function Tile:isPassableBy(body)
-  return not(self.solid or self.hole)
+  if (body.solid  and self.solid) or
+     (body.walker and self.hole) then
+    return false
+  end
+  return true
 end
 
 function Tile:draw()

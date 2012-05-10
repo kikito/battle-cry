@@ -6,6 +6,8 @@ function Body:initialize(map, x,y)
   self.senses = {}
   self.map = map
   self.x, self.y = x,y
+  self.solid  = true
+  self.walker = true
   self.class:addInstance(self)
 end
 
