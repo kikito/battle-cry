@@ -1,4 +1,3 @@
-
 local anim8      = require 'lib.anim8'
 local Stateful   = require 'lib.stateful'
 
@@ -28,12 +27,12 @@ local function loadAnimations(self)
   }
 end
 
-function HumanBody:initialize(map,x,y,facing,speed)
+function HumanBody:initialize(map,x,y,speed)
   MobileBody.initialize(self, map,x,y,16,8)
 
   loadAnimations(self)
 
-  self.facing = facing
+  self.facing = "down"
   self.speed  = speed
   self:gotoState('Idle')
 end

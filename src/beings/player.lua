@@ -5,7 +5,7 @@ local HumanBody   = require 'src.beings.bodies.human_body'
 local Player = class('Player', Being)
 
 function Player:initialize(map, x,y)
-  Being.initialize(self, PlayerMind:new(), HumanBody:new(map,x,y, 'left', 60))
+  Being.initialize(self, PlayerMind:new(), HumanBody:new(map,x,y,60))
 end
 
 return Player
