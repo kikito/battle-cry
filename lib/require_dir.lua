@@ -1,5 +1,5 @@
 local function toRequirePath(fsPath)
-  return fsPath:gsub('%.lua',''):gsub('/','.')
+  return fsPath:gsub('%.lua$',''):gsub('/','.')
 end
 
 
