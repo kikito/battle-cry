@@ -1,11 +1,11 @@
 local Being         = require 'src.beings.being'
-local FollowerMind  = require 'src.beings.minds.follower_mind'
-local FlyerBody     = require 'src.beings.bodies.flyer_body'
+local ScaredMind    = require 'src.beings.minds.scared_mind'
+local PteroBody     = require 'src.beings.bodies.ptero_body'
 
 local Ptero = class('Ptero', Being)
 
 function Ptero:initialize(map, subject, x,y)
-  Being.initialize(self, FollowerMind:new(subject), FlyerBody:new(map,x,y,60))
+  Being.initialize(self, ScaredMind:new(subject), PteroBody:new(map,x,y,40))
 end
 
 return Ptero
