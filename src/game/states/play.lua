@@ -15,7 +15,7 @@ function Play:enteredState()
   map            = Map:new()
   local player   = Player:new(map, 100, 100)
   Follower:new(map, player.body, 580,450)
-  Ptero:new(map, player.body, 600, 200)
+  Ptero:new(map, player.body, 300, 100)
 end
 
 function Play:exitedState()
