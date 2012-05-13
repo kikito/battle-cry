@@ -7,25 +7,30 @@ local tileWidth, tileHeight = 32, 32
 local floor = math.floor
 
 local str = [[
-#########################
-#      #      v        v#
-#      #      v         #
-#      $      v         #
-#      #      v         #
-#      $      vvvvvvvvv #
-#      #                #
-#      #                #
-#      #                #
-#              ##########
-#              #        #
-#              #        #
-#              $        #
-#          v   $        #
-#          v   $        #
-#          v   #        #
-#          v   #####    #
-#          v            #
-#########################
+#######################################
+#      #      v        vvvvvvv        #
+#      #      v              v        #
+#      $      v              v        #
+#      #      v              v        #
+#      $      vvvvvvvvv               #
+#      #                #             #
+#      #                #             #
+#      #                              #
+#              ##########             #
+#              #        #             #
+#              #        #             #
+#              $        #             #
+#          v   $                      #
+#          v   $        #    vvvvv    #
+#          v   #        #    v        #
+#          v   #####    #    vvvvv    #
+#          v            #        v    #
+###### ##################    vvvvv    #
+#                                     #
+#                                     #
+#            ###$$$###                #
+#            #       #                #
+#######################################
 ]]
 
 local legend = {
@@ -57,12 +62,12 @@ function Map:initialize()
   self.height = y - 1
 end
 
-function Map:draw(minx, miny, width, height)
-  minx, miny = minx or 1, miny or 1
-  width, height = width or self.width, height or self.height
+function Map:draw(wl, wt, ww, wh)
+  local l, t = self:toMap(wl, wt)
+  local r, b = self:toMap(wl + ww, wt + wh)
 
-  for x=minx, minx+width-1 do
-    for y=miny, miny+height-1 do
+  for x = l, r do
+    for y = t, b do
       self.tiles[x][y]:draw()
     end
   end
@@ -87,6 +92,12 @@ function Map:los(x0,y0, x1,y1)
   end)
 end
 
+function Map:getBoundary()
+  local w, h = self:toWorld(self.width + 1, self.height + 1)
+  w = w - 1
+  h = h - 1
+  return 0,0,w,h
+end
 
 
 

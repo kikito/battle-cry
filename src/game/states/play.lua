@@ -1,3 +1,5 @@
+local camera   = require 'lib.camera'
+
 local Player   = require 'src.beings.player'
 local Follower = require 'src.beings.follower'
 local Ptero    = require 'src.beings.ptero'
@@ -10,26 +12,31 @@ local Play = Game:addState('Play')
 local bresenham = require 'lib.bresenham'
 
 local map
+local player
 
 function Play:enteredState()
-  map            = Map:new()
-  local player   = Player:new(map, 100, 100)
+  map    = Map:new()
+  camera.setBoundary(map:getBoundary())
+  player = Player:new(map, 100, 100)
   Follower:new(map, player.body, 580,450)
   Ptero:new(map, player.body, 300, 100)
 end
 
 function Play:exitedState()
-  map = nil
+  map, player = nil, nil
   Being:destroyAll()
 end
 
 function Play:draw()
-  map:draw()
-  Being:drawAll()
+  camera.draw(function()
+    map:draw(camera.getViewport())
+    Being:drawAll()
+  end)
 end
 
 function Play:update(dt)
   Being:updateAll(dt)
+  camera.lookAt(player.body.x, player.body.y)
 end
 
 function Play:escape()
