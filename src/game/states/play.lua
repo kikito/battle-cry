@@ -1,9 +1,9 @@
 local camera   = require 'lib.camera'
 
-local Player   = require 'src.beings.player'
-local Follower = require 'src.beings.follower'
-local Ptero    = require 'src.beings.ptero'
-local Being    = require 'src.beings.being'
+local Player   = require 'src.beings.Player'
+local Follower = require 'src.beings.Follower'
+local Ptero    = require 'src.beings.Ptero'
+local Being    = require 'src.beings.Being'
 local Map      = require 'src.world.map'
 
 local Game = require 'src.game.game'

@@ -2,9 +2,9 @@ local anim8      = require 'lib.anim8'
 local Stateful   = require 'lib.stateful'
 
 local Media      = require 'src.media'
-local MobileBody = require 'src.beings.bodies.mobile_body'
+local MobileBody = require 'src.beings.bodies.MobileBody'
 
-local HumanBody = class('HumanBody', MobileBody):include(Stateful)
+local HumanBody  = class(..., MobileBody):include(Stateful)
 
 local spriteW, spriteH = 32, 32
 

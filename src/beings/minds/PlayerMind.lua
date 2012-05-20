@@ -1,7 +1,7 @@
 local beholder    = require 'lib.beholder'
-local Mind        = require 'src.beings.minds.mind'
+local Mind        = require 'src.beings.minds.Mind'
 
-local PlayerMind = class('PlayerMind', Mind)
+local PlayerMind = class(..., Mind)
 
 function PlayerMind:initialize()
   Mind.initialize(self)

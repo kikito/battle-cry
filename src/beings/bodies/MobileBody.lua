@@ -1,6 +1,6 @@
-local Body       = require('src.beings.bodies.body')
+local Body       = require('src.beings.bodies.Body')
 
-local MobileBody = class('MobileBody', Body)
+local MobileBody = class(..., Body)
 
 local deltasByDirection = {
   up   =  { 0, -1 },

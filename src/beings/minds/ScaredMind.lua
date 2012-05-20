@@ -1,6 +1,6 @@
-local Mind = require 'src.beings.minds.mind'
+local Mind = require 'src.beings.minds.Mind'
 
-local ScaredMind = class('ScaredMind', Mind)
+local ScaredMind = class(..., Mind)
 
 function ScaredMind:initialize(subject)
   Mind.initialize(self)

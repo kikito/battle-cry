@@ -1,9 +1,9 @@
-local anim8      = require 'lib.anim8'
+local anim8  = require 'lib.anim8'
 
-local Media      = require 'src.media'
-local MobileBody = require 'src.beings.bodies.mobile_body'
+local Media  = require 'src.media'
+local MobileBody = require 'src.beings.bodies.MobileBody'
 
-local PteroBody = class('PteroBody', MobileBody)
+local PteroBody  = class('Ptero', MobileBody)
 
 local spriteW, spriteH = 32, 32
 
