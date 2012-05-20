@@ -1,6 +1,6 @@
 local anim8  = require 'lib.anim8'
 
-local Media  = require 'src.media'
+local media  = require 'src.media'
 local MobileBody = require 'src.beings.bodies.MobileBody'
 
 local PteroBody  = class('Ptero', MobileBody)
@@ -8,7 +8,7 @@ local PteroBody  = class('Ptero', MobileBody)
 local spriteW, spriteH = 32, 32
 
 local function loadAnimations(self)
-  self.image  = Media.images.ptero
+  self.image  = media.images.ptero
   local g = anim8.newGrid(spriteW, spriteH, self.image:getWidth(), self.image:getHeight())
   self.animations = {
     fly = {

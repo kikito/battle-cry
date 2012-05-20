@@ -1,5 +1,5 @@
 local anim8 = require 'lib.anim8'
-local Media = require 'src.media'
+local media = require 'src.media'
 
 local Tile = class(..., nil)
 
@@ -11,7 +11,6 @@ function Tile:initialize(x,y,left,top,quadX, quadY)
   self.x, self.y = x,y
   self.left,  self.top    = left, top
   self.right, self.bottom = self.left + TileWidth, self.top + TileHeight
-  self.image = Media.images.tiles
   self.quad = grid(quadX, quadY)[1]
 end
 
@@ -24,7 +23,7 @@ function Tile:isPassableBy(body)
 end
 
 function Tile:draw()
-  love.graphics.drawq(self.image, self.quad, self.left, self.top)
+  love.graphics.drawq(media.images.tiles, self.quad, self.left, self.top)
 end
 
 function Tile:getBoundingBox()

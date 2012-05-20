@@ -1,7 +1,7 @@
 local anim8      = require 'lib.anim8'
 local Stateful   = require 'lib.stateful'
 
-local Media      = require 'src.media'
+local media      = require 'src.media'
 local MobileBody = require 'src.beings.bodies.MobileBody'
 
 local HumanBody  = class(..., MobileBody):include(Stateful)
@@ -9,7 +9,7 @@ local HumanBody  = class(..., MobileBody):include(Stateful)
 local spriteW, spriteH = 32, 32
 
 local function loadAnimations(self)
-  self.image  = Media.images.sprite
+  self.image  = media.images.sprite
   local g = anim8.newGrid(spriteW, spriteH, self.image:getWidth(), self.image:getHeight())
   self.animations = {
     walk = {
