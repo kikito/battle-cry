@@ -1,7 +1,7 @@
 local Menu     = require 'lib.menu'
 
-local Game     = require 'src.game.game'
-local MainMenu = require 'src.game.states.main_menu'
+local Game     = require 'src.game.Game'
+local MainMenu = require 'src.game.states.MainMenu'
 
 local OptionsMenu = Game:addState('OptionsMenu', MainMenu)
 

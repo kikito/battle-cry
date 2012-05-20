@@ -6,10 +6,8 @@ local Ptero    = require 'src.beings.Ptero'
 local Being    = require 'src.beings.Being'
 local Map      = require 'src.world.map'
 
-local Game = require 'src.game.game'
+local Game = require 'src.game.Game'
 local Play = Game:addState('Play')
-
-local bresenham = require 'lib.bresenham'
 
 local map
 local player

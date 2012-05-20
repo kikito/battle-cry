@@ -1,5 +1,5 @@
 local beholder = require('lib.beholder')
-local Game = require('src.game.game')
+local Game = require('src.game.Game')
 
 local ChoosingKey = Game:addState('ChoosingKey')
 

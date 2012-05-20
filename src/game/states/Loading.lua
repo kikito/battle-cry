@@ -1,6 +1,6 @@
 local loader = require 'lib.love-loader'
 
-local Game  = require 'src.game.game'
+local Game  = require 'src.game.Game'
 local Media = require 'src.media'
 
 local Loading = Game:addState('Loading')

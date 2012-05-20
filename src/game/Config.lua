@@ -11,9 +11,9 @@ local defaults = {
   }
 }
 
-local GameConfig = class('GameConfig')
+local Config = class(..., nil)
 
-function GameConfig:initialize()
+function Config:initialize()
   if love.filesystem.exists("config.lua") then
     local f = love.filesystem.load("config.lua")
     self.keys = (f()).keys
@@ -23,7 +23,7 @@ function GameConfig:initialize()
   self:bindActions()
 end
 
-function GameConfig:save()
+function Config:save()
   local file = love.filesystem.newFile("config.lua")
   file:open("w")
   file:write("return {\n")
@@ -38,12 +38,12 @@ function GameConfig:save()
   file:close()
 end
 
-function GameConfig:setKey(action, key)
+function Config:setKey(action, key)
   self.keys[action] = key
   self:bindActions()
 end
 
-function GameConfig:bindActions()
+function Config:bindActions()
   beholder.stopObserving(self)
   beholder.group(self, function()
     for action, key in pairs(self.keys) do
@@ -57,4 +57,4 @@ function GameConfig:bindActions()
   end)
 end
 
-return GameConfig
+return Config

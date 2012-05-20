@@ -1,4 +1,4 @@
-local Game = require 'src.game.game'
+local Game = require 'src.game.Game'
 
 local NotImplemented = Game:addState('NotImplemented')
 

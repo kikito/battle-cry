@@ -1,5 +1,5 @@
-local Game = require 'src.game.game'
 local Menu = require 'lib.menu'
+local Game = require 'src.game.Game'
 
 local MainMenu = Game:addState('MainMenu')
 

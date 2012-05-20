@@ -1,7 +1,7 @@
 local Stateful    = require 'lib.stateful'
 local beholder    = require 'lib.beholder'
 
-local Config  = require 'src.game.config'
+local Config  = require 'src.game.Config'
 
 local Game = class('Game'):include(Stateful)
 
