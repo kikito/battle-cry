@@ -1,6 +1,7 @@
 require 'lib.middleclass'
 local cron     = require 'lib.cron'
 local beholder = require 'lib.beholder'
+require_tree   = require 'lib.require_tree'
 
 -- game & gamestate requires
 local Game = require 'src.game'

@@ -1,6 +1,6 @@
 local Being  = require 'src.beings.Being'
-local minds  = require 'src.beings.minds'
-local bodies = require 'src.beings.bodies'
+local minds  = require_tree 'src.beings.minds'
+local bodies = require_tree 'src.beings.bodies'
 
 local Ptero = class('Ptero', Being)
 
