@@ -21,7 +21,7 @@ local function loadAnimations(self)
 end
 
 function PteroBody:initialize(map,x,y,speed)
-  MobileBody.initialize(self, map,x,y,16,8)
+  MobileBody.initialize(self, map,x,y,12,6)
   self.walker = false
   self.facing = "down"
   self.speed  = speed

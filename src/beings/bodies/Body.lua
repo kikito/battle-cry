@@ -2,10 +2,10 @@ local Apply = require 'lib.apply'
 
 local Body = class('Body'):include(Apply)
 
-function Body:initialize(map, x,y)
+function Body:initialize(map, mx, my)
   self.senses = {}
   self.map = map
-  self.x, self.y = x,y
+  self.x, self.y = map:toWorldCentered(mx, my)
   self.solid  = true
   self.walker = true
   self.class:addInstance(self)

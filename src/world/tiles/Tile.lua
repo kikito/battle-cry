@@ -3,8 +3,8 @@ local media = require 'src.media'
 
 local Tile = class(..., nil)
 
-Tile.static.TILEW = 32
-Tile.static.TILEH = 32
+Tile.static.TILEW = 16
+Tile.static.TILEH = 16
 
 local grid = anim8.newGrid(Tile.TILEW, Tile.TILEH, 1024, 1024)
 
@@ -17,7 +17,7 @@ end
 
 function Tile:isPassableBy(body)
   if (body.solid  and self.solid) or
-     (body.walker and self.hole) then
+     (body.walker and self.hole)  then
     return false
   end
   return true

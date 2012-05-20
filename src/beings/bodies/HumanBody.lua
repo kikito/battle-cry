@@ -28,7 +28,7 @@ local function loadAnimations(self)
 end
 
 function HumanBody:initialize(map,x,y,speed)
-  MobileBody.initialize(self, map,x,y,16,8)
+  MobileBody.initialize(self, map,x,y,12,6)
 
   loadAnimations(self)
 

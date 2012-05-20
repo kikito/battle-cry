@@ -66,6 +66,12 @@ function Map:draw(wl, wt, ww, wh)
   local l, t = self:toMap(wl, wt)
   local r, b = self:toMap(wl + ww, wt + wh)
 
+  -- small maps should not try to draw "beyond the camera"
+  l = l < 1 and 1 or l
+  t = t < 1 and 1 or t
+  r = r < self.width  and r or self.width
+  b = b < self.height and b or self.height
+
   for x = l, r do
     for y = t, b do
       self.tiles[x][y]:draw()
@@ -75,6 +81,10 @@ end
 
 function Map:toWorld(x,y)
   return (x-1) * TILEW, (y-1) * TILEH
+end
+
+function Map:toWorldCentered(x,y)
+  return (x-0.5) * TILEW, (y-0.5) * TILEH
 end
 
 function Map:toMap(wx, wy)

@@ -15,9 +15,9 @@ local player
 function Play:enteredState()
   map    = Map:new()
   camera.setBoundary(map:getBoundary())
-  player = Player:new(map, 100, 100)
-  Follower:new(map, player.body, 580,450)
-  Ptero:new(map, player.body, 300, 100)
+  player = Player:new(map, 4, 4)
+  Follower:new(map, player.body, 20, 20)
+  Ptero:new(map, player.body, 20, 4)
 end
 
 function Play:exitedState()

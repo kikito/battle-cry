@@ -14,6 +14,7 @@ local boundary = {
 }
 
 local function clampNumber(v, min, max)
+  if max < min then return 0 end -- this happens when viewport is bigger than boundary
   return v < min and min or (v > max and max or v)
 end
 
