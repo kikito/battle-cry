@@ -11,15 +11,13 @@ local function noExtension(entry)
 end
 
 local lfs = love.filesystem
-local cache = {}
 
 local require_tree
 require_tree = function(requirePath)
-  if cache[requirePath] then return cache[requirePath] end
 
   local result = {}
-  local entries = lfs.enumerate(requirePath)
-  local fsPath
+  local fsPath = toFSPath(requirePath)
+  local entries = lfs.enumerate(fsPath)
   for _,entry in ipairs(entries) do
     fsPath = toFSPath(requirePath .. '.' .. entry)
     if lfs.isDirectory(fsPath) then
@@ -29,8 +27,6 @@ require_tree = function(requirePath)
       result[entry] = require(toRequirePath(requirePath .. '/' .. entry))
     end
   end
-
-  cache[requirePath] = result
 
   return result
 end

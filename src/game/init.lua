@@ -1,5 +1,5 @@
-local require_dir = require 'lib.require_dir'
+local require_tree = require 'lib.require_tree'
 
-local Game       = require 'src.game.game'
-require_dir('src/game/states')
+local Game = require 'src.game.game'
+require_tree('src.game.states')
 return Game
