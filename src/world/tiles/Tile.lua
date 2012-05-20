@@ -6,7 +6,7 @@ local Tile = class(..., nil)
 Tile.static.TILEW = 16
 Tile.static.TILEH = 16
 
-local grid = anim8.newGrid(Tile.TILEW, Tile.TILEH, 1024, 1024)
+local grid = anim8.newGrid(Tile.TILEW, Tile.TILEH*3, 1024, 1024)
 
 function Tile:initialize(x,y,left,top,quadX, quadY)
   self.x, self.y = x,y
@@ -24,7 +24,7 @@ function Tile:isPassableBy(body)
 end
 
 function Tile:draw()
-  love.graphics.drawq(media.images.tiles, self.quad, self.left, self.top)
+  love.graphics.drawq(media.images.tiles, self.quad, self.left, self.top - Tile.TILEH)
 end
 
 function Tile:getBoundingBox()
