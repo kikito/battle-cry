@@ -2,7 +2,7 @@ local bresenham = require 'lib.bresenham'
 
 local tiles = require_tree 'src.world.tiles'
 
-local tileWidth, tileHeight = 32, 32
+local TILEW, TILEH = tiles.Tile.TILEW, tiles.Tile.TILEH
 
 local floor = math.floor
 
@@ -74,11 +74,11 @@ function Map:draw(wl, wt, ww, wh)
 end
 
 function Map:toWorld(x,y)
-  return (x-1)*tileWidth, (y-1)*tileHeight
+  return (x-1) * TILEW, (y-1) * TILEH
 end
 
 function Map:toMap(wx, wy)
-  return floor(wx/tileWidth)+1, floor(wy/tileHeight)+1
+  return floor(wx / TILEW) + 1, floor(wy / TILEH) + 1
 end
 
 function Map:getContainingTile(wx, wy)
@@ -98,8 +98,5 @@ function Map:getBoundary()
   h = h - 1
   return 0,0,w,h
 end
-
-
-
 
 return Map

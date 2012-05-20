@@ -3,14 +3,15 @@ local media = require 'src.media'
 
 local Tile = class(..., nil)
 
-local TileWidth, TileHeight = 32, 32
+Tile.static.TILEW = 32
+Tile.static.TILEH = 32
 
-local grid = anim8.newGrid(TileWidth, TileHeight, 1024, 1024)
+local grid = anim8.newGrid(Tile.TILEW, Tile.TILEH, 1024, 1024)
 
 function Tile:initialize(x,y,left,top,quadX, quadY)
   self.x, self.y = x,y
   self.left,  self.top    = left, top
-  self.right, self.bottom = self.left + TileWidth, self.top + TileHeight
+  self.right, self.bottom = self.left + Tile.TILEW, self.top + Tile.TILEH
   self.quad = grid(quadX, quadY)[1]
 end
 
