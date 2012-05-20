@@ -1,7 +1,7 @@
 local anim8 = require 'lib.anim8'
 local Media = require 'src.media'
 
-local Tile = class('Tile')
+local Tile = class(..., nil)
 
 local TileWidth, TileHeight = 32, 32
 
@@ -31,41 +31,4 @@ function Tile:getBoundingBox()
   return self.left, self.top, self.right - self.left, self.bottom - self.top
 end
 
-
-local Grass = class('Grass', Tile)
-
-function Grass:initialize(x,y,left,top)
-  Tile.initialize(self,x,y,left,top,1,1)
-end
-
-local Wall = class('Wall', Tile)
-
-function Wall:initialize(x,y,left,top)
-  Tile.initialize(self,x,y,left,top,2,1)
-  self.solid = true
-  self.opaque = true
-end
-
-local Hole = class('Hole', Tile)
-
-function Hole:initialize(x,y,left,top)
-  Tile.initialize(self,x,y,left,top,3,1)
-  self.hole = true
-end
-
-local Glass = class('Glass', Tile)
-
-function Glass:initialize(x,y,left,top)
-  Tile.initialize(self,x,y,left,top,4,1)
-  self.solid = true
-end
-
-return {
-  Grass = Grass,
-  Wall  = Wall,
-  Hole  = Hole,
-  Glass = Glass
-}
-
-
-
+return Tile

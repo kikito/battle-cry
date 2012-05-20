@@ -4,7 +4,7 @@ local Player   = require 'src.beings.Player'
 local Follower = require 'src.beings.Follower'
 local Ptero    = require 'src.beings.Ptero'
 local Being    = require 'src.beings.Being'
-local Map      = require 'src.world.map'
+local Map      = require 'src.world.Map'
 
 local Game = require 'src.game.Game'
 local Play = Game:addState('Play')

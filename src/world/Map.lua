@@ -1,6 +1,6 @@
 local bresenham = require 'lib.bresenham'
 
-local tiles = require('src.world.tiles')
+local tiles = require_tree 'src.world.tiles'
 
 local tileWidth, tileHeight = 32, 32
 
