@@ -8,10 +8,8 @@ Tile.static.TILEH = 16
 
 local grid = anim8.newGrid(Tile.TILEW, Tile.TILEH*3, 1024, 1024)
 
-function Tile:initialize(x,y,left,top,quadX, quadY)
-  self.x, self.y = x,y
-  self.left,  self.top    = left, top
-  self.right, self.bottom = self.left + Tile.TILEW, self.top + Tile.TILEH
+function Tile:initialize(cell, quadX, quadY)
+  self.cell = cell
   self.quad = grid(quadX, quadY)[1]
 end
 
@@ -24,11 +22,7 @@ function Tile:isPassableBy(body)
 end
 
 function Tile:draw()
-  love.graphics.drawq(media.images.tiles, self.quad, self.left, self.top - Tile.TILEH)
-end
-
-function Tile:getBoundingBox()
-  return self.left, self.top, self.right - self.left, self.bottom - self.top
+  love.graphics.drawq(media.images.tiles, self.quad, self.cell.left, self.cell.top - Tile.TILEH)
 end
 
 return Tile

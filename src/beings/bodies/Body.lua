@@ -19,8 +19,8 @@ function Body:getPosition()
   return self.x, self.y
 end
 
-function Body:getContainingTile()
-  return self.map:getContainingTile(self.x, self.y)
+function Body:getContainingCell()
+  return self.map:getCell(self.x, self.y)
 end
 
 function Body:update(wishes, dt)
@@ -35,8 +35,8 @@ function Body:sense()
 end
 
 function Body:getPerceivedBy(perceiver)
-  local x0,y0 = self.map:toMap(perceiver.x, perceiver.y)
-  local x1,y1 = self.map:toMap(self.x, self.y)
+  local x0,y0 = self.map:toGrid(perceiver.x, perceiver.y)
+  local x1,y1 = self.map:toGrid(self.x, self.y)
 
   if self.map:los(x0,y0,x1,y1) then
     perceiver.senses.sight[self] = {x=self.x, y=self.y}
