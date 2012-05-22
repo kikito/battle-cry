@@ -42,7 +42,7 @@ function MobileBody:getBoundingBox()
 end
 
 local function canPass(self,x,y)
-  return self.map:getContainingTile(x,y):isPassableBy(self)
+  return self.map:getCell(x,y).tile:isPassableBy(self)
 end
 
 function MobileBody:move(dt)
@@ -53,7 +53,7 @@ function MobileBody:move(dt)
 
   local dx, dy = vx * dt, vy * dt
   local w2,h2 = self.halfWidth, self.halfHeight
-  local tile = nil
+  local cell = nil
   local x,y,w,h = self:getBoundingBox()
 
   if vx ~= 0 then -- moving left or right
@@ -61,8 +61,8 @@ function MobileBody:move(dt)
     if canPass(self, futureX, y) and canPass(self, futureX, y + h) then
       self.x = self.x + dx
     else
-      tile = self:getContainingTile()
-      self.x = vx > 0 and (tile.right - w2 - 1) or (tile.left + w2)
+      cell = self:getContainingCell()
+      self.x = vx > 0 and (cell.right - w2 - 1) or (cell.left + w2)
     end
   end
 
@@ -71,8 +71,8 @@ function MobileBody:move(dt)
     if canPass(self, x, futureY) and canPass(self, x + w, futureY) then
       self.y = self.y + dy
     else
-      tile = tile or self:getContainingTile()
-      self.y = vy > 0 and (tile.bottom - h2 - 1) or (tile.top + h2)
+      cell = cell or self:getContainingCell()
+      self.y = vy > 0 and (cell.bottom - h2 - 1) or (cell.top + h2)
     end
   end
   -- TODO: this might not work when impacting one diagonal precisely through its corner

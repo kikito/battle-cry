@@ -48,7 +48,7 @@ function Grid:eachCell(f, wl, wt, ww, wh)
 end
 
 function Grid:getCell(wx,wy)
-  local gx,gy = self:goGrid(wx,wy)
+  local gx,gy = self:toGrid(wx,wy)
   return self.cells[gx][gy]
 end
 
