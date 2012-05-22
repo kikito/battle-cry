@@ -53,7 +53,7 @@ function MobileBody:move(dt)
 
   local dx, dy = vx * dt, vy * dt
   local w2,h2 = self.halfWidth, self.halfHeight
-  local cell = nil
+  local cell = self.cell
   local x,y,w,h = self:getBoundingBox()
 
   if vx ~= 0 then -- moving left or right
@@ -61,7 +61,6 @@ function MobileBody:move(dt)
     if canPass(self, futureX, y) and canPass(self, futureX, y + h) then
       self.x = self.x + dx
     else
-      cell = self:getContainingCell()
       self.x = vx > 0 and (cell.right - w2 - 1) or (cell.left + w2)
     end
   end
@@ -77,6 +76,7 @@ function MobileBody:move(dt)
   end
   -- TODO: this might not work when impacting one diagonal precisely through its corner
 
+  self.cell = self.map:updateItem(self)
 end
 
 function MobileBody:isMoving()

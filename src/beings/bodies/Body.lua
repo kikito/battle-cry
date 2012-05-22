@@ -4,15 +4,17 @@ local Body = class('Body'):include(Apply)
 
 function Body:initialize(map, mx, my)
   self.senses = {}
-  self.map = map
   self.x, self.y = map:toWorldCentered(mx, my)
   self.solid  = true
   self.walker = true
+  self.map = map
+  self.cell = self.map:addItem(self)
   self.class:addInstance(self)
 end
 
 function Body:destroy()
   self.class:removeInstance(self)
+  self.map:removeItem(self)
 end
 
 function Body:getPosition()

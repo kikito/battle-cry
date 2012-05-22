@@ -60,6 +60,9 @@ end
 
 local function drawCell(x, y, cell)
   cell.tile:draw()
+  for item, _ in pairs(cell.items) do
+    item:draw()
+  end
 end
 
 function Map:draw(wl, wt, ww, wh)

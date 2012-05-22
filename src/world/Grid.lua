@@ -7,6 +7,7 @@ local Grid = class(..., nil)
 function Grid:initialize(width, height, cellWidth, cellHeight)
   self.width, self.height          = width, height
   self.cellWidth, self.cellHeight  = cellWidth, cellHeight
+  self.cellsByItem = setmetatable({}, {__mode = "k"})
 
   self.cells = {}
 
@@ -67,6 +68,32 @@ end
 function Grid:getBoundary()
   local w, h = self:toWorld(self.width + 1, self.height + 1)
   return 0, 0, w - 1, h - 1
+end
+
+function Grid:addItem(item)
+  local cell = self:getCell(item.x, item.y)
+  cell:addItem(item)
+  self.cellsByItem[item] = cell
+  return cell
+end
+
+function Grid:removeItem(item)
+  local cell = self:getCell(item.x, item.y)
+  cell:removeItem(item)
+  self.cellsByItem[item] = nil
+  return cell
+end
+
+function Grid:updateItem(item)
+  local cell = self.cellsByItem[item]
+  local newCell = self:getCell(item.x, item.y)
+  if cell ~= newCell then
+    if cell then cell:removeItem(item) end
+    newCell:addItem(item)
+    self.cellsByItem[item] = newCell
+    return newCell
+  end
+  return cell
 end
 
 return Grid

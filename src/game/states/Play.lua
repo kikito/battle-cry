@@ -28,7 +28,6 @@ end
 function Play:draw()
   camera.draw(function()
     map:draw(camera.getViewport())
-    Being:drawAll()
   end)
 end
 
