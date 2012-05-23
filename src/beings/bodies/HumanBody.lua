@@ -28,12 +28,10 @@ local function loadAnimations(self)
 end
 
 function HumanBody:initialize(map,x,y,speed)
-  MobileBody.initialize(self, map,x,y,12,6)
+  MobileBody.initialize(self, map,x,y,12,6,speed)
 
   loadAnimations(self)
 
-  self.facing = "down"
-  self.speed  = speed
   self:gotoState('Idle')
 end
 
