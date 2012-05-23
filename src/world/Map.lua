@@ -5,30 +5,53 @@ local tiles = require_tree 'src.world.tiles'
 local Tile  = tiles.Tile
 
 local str = [[
-#######################################
-#      #      v        vvvvvvv        #
-#      #      v              v        #
-#      $      v              v        #
-#      #      v              v        #
-#      $      vvvvvvvvv               #
-#      #                #             #
-#      #                #             #
-#      #                              #
-#              ##########             #
-#              #        #             #
-#              #        #             #
-#              $        #             #
-#          v   $                      #
-#          v   $        #    vvvvv    #
-#          v   #        #    v        #
-#          v   #####    #    vvvvv    #
-#          v            #        v    #
-###### ##################    vvvvv    #
-#                                     #
-#                                     #
-#            ###$$$###                #
-#            #       #                #
-#######################################
+###############################################################
+#      #      v               vvvvv       vvvvv       vvvvv   #
+#      #      v              vvvvvvv     vvvvvvv     vvvvvvv  #
+#      $      v              vvvvvvv     vvvvvvv     vvvvvvv  #
+#      #      v               vvvvv       vvvvv       vvvvv   #
+#      $      vvvvvvvvv             vvvvv       vvvvv         #
+#      #                #          vvvvvvv     vvvvvvv        #
+#      #                           vvvvvvv     vvvvvvv        #
+#      #                            vvvvv       vvvvv         #
+#              ##########                                     #
+#              #        #              vvvvvvvvvvv            #
+#              #        #             vvvvvvvvvvvvv           #
+#              $                     vvvv    vvvvvvv          #
+#          v   $                     vvv      vvvvvv          #
+#          v   $                     vvv      ######          #
+#          v   #        #            vvv  $$                  #
+#          v   #####    #            vvv  $$                  #
+#          v            #            vvv      ######          #
+###### ##################            vvv      vvvvvv          #
+#                                    vvvv    vvvvvvv          #
+#                                     vvvvvvvvvvvvv           #
+#                                      vvvvvvvvvvv            #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#       $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                 #
+#       $                                   $                 #
+#       $                                   $                 #
+#       $              vvvvv                $                 #
+#       $             vvvvvvv               $                 #
+#       $              vvvvv                $                 #
+#       $                                   $                 #
+#       $                                   $                 #
+#       $                                   $                 #
+#       $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                 #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+#                                                             #
+###############################################################
 ]]
 
 local legend = {
