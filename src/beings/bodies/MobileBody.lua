@@ -76,7 +76,7 @@ function MobileBody:move(dt)
   end
   -- TODO: this might not work when impacting one diagonal precisely through its corner
 
-  self.cell = self.map:updateItem(self)
+  self.cell = self.map:update(self)
 end
 
 function MobileBody:isMoving()

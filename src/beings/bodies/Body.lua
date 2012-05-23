@@ -1,6 +1,6 @@
-local Apply = require 'lib.apply'
+local Each = require 'lib.each'
 
-local Body = class('Body'):include(Apply)
+local Body = class('Body'):include(Each)
 
 function Body:initialize(map, mx, my)
   self.senses = {}
@@ -8,13 +8,13 @@ function Body:initialize(map, mx, my)
   self.solid  = true
   self.walker = true
   self.map = map
-  self.cell = self.map:addItem(self)
-  self.class:addInstance(self)
+  self.cell = self.map:add(self)
+  self.class:add(self)
 end
 
 function Body:destroy()
-  self.class:removeInstance(self)
-  self.map:removeItem(self)
+  self.class:remove(self)
+  self.map:remove(self)
 end
 
 function Body:getPosition()
@@ -33,7 +33,7 @@ function Body:sense()
   self.senses.x = self.x
   self.senses.y = self.y
   self.senses.sight = {}
-  Body:applyMethod('getPerceivedBy', self)
+  Body:each('getPerceivedBy', self)
 end
 
 function Body:getPerceivedBy(perceiver)

@@ -1,18 +1,18 @@
-local Apply    = require 'lib.apply'
+local Each     = require 'lib.each'
 local beholder = require 'lib.beholder'
 
-local Being = class('Entity'):include(Apply)
+local Being = class('Entity'):include(Each)
 
 function Being.static:drawAll()
-  self:applyMethod('draw')
+  self:each('draw')
 end
 
 function Being.static:updateAll(dt)
-  self:applyMethodSafely('update', dt)
+  self:safeEach('update', dt)
 end
 
 function Being.static:destroyAll()
-  self:applyMethodSafely('destroy')
+  self:safeEach('destroy')
 end
 
 --------------------------------------
@@ -20,11 +20,11 @@ end
 function Being:initialize(mind, body)
   self.mind = mind
   self.body = body
-  self.class:addInstance(self)
+  self.class:add(self)
 end
 
 function Being:destroy()
-  self.class:removeInstance(self)
+  self.class:remove(self)
   self.body:destroy()
   self.mind:destroy()
 end
