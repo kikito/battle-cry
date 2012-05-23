@@ -1,6 +1,6 @@
 local Each = require 'lib.each'
 
-local Body = class('Body'):include(Each)
+local Body = class(..., nil):include(Each)
 
 function Body:initialize(map, mx, my, width, height)
   self.senses = {}
