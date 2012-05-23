@@ -11,12 +11,10 @@ function Grid:initialize(width, height, cellWidth, cellHeight)
 
   self.cells = {}
 
-  local left, top
-  for x=1,width do
-    self.cells[x] = {}
-    for y=1,height do
-      left, top        = self:toWorld(x,y)
-      self.cells[x][y] = Cell:new(left, top, cellWidth, cellHeight)
+  for y = 1, height do
+    self.cells[y] = {}
+    for x = 1, width do
+      self.cells[y][x] = Cell:new(cellWidth, cellHeight, self:toWorld(x,y))
     end
   end
 end
@@ -30,27 +28,26 @@ function Grid:pad(gx,gy)
 end
 
 function Grid:eachCell(f, wl, wt, ww, wh)
+  local l, t, r, b = self:boxToGrid(wl, wt, ww, wh)
 
-  local l,t,r,b
-
-  if wl and wt and ww and wh then
-    l, t = self:pad(self:toGrid(wl, wt))
-    r, b = self:pad(self:toGrid(wl + ww, wt + wh))
-  else
-    l, t, r, b = 1, 1, self.width, self.height
-  end
-
-  for x = l, r do
-    for y = t, b do
-      f(x, y, self.cells[x][y])
+  for y = t, b do
+    for x = l, r do
+      f(self.cells[y][x])
     end
   end
+end
 
+function Grid:eachRow(f, wl, wt, ww, wh)
+  local l, t, r, b = self:boxToGrid(wl, wt, ww, wh)
+
+  for y = t, b do
+    f(self.cells[y], l, r)
+  end
 end
 
 function Grid:getCell(wx,wy)
   local gx,gy = self:toGrid(wx,wy)
-  return self.cells[gx][gy]
+  return self.cells[gy][gx]
 end
 
 function Grid:toWorld(gx,gy)
@@ -65,31 +62,41 @@ function Grid:toGrid(wx, wy)
   return floor(wx / self.cellWidth) + 1, floor(wy / self.cellHeight) + 1
 end
 
+function Grid:boxToGrid(wl, wt, ww, wh)
+  if wl and wt and ww and wh then
+    local l, t = self:pad(self:toGrid(wl, wt))
+    local r, b = self:pad(self:toGrid(wl + ww, wt + wh))
+    return l, t, r, b
+  else
+    return 1, 1, self.width, self.height
+  end
+end
+
 function Grid:getBoundary()
   local w, h = self:toWorld(self.width + 1, self.height + 1)
   return 0, 0, w - 1, h - 1
 end
 
-function Grid:addItem(item)
+function Grid:add(item)
   local cell = self:getCell(item.x, item.y)
-  cell:addItem(item)
+  cell.items[item]       = true
   self.cellsByItem[item] = cell
   return cell
 end
 
-function Grid:removeItem(item)
+function Grid:remove(item)
   local cell = self:getCell(item.x, item.y)
-  cell:removeItem(item)
+  cell.items[item]       = nil
   self.cellsByItem[item] = nil
   return cell
 end
 
-function Grid:updateItem(item)
+function Grid:update(item)
   local cell = self.cellsByItem[item]
   local newCell = self:getCell(item.x, item.y)
   if cell ~= newCell then
-    if cell then cell:removeItem(item) end
-    newCell:addItem(item)
+    cell.items[item]       = nil
+    newCell.items[item]    = true
     self.cellsByItem[item] = newCell
     return newCell
   end
