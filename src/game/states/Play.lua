@@ -3,6 +3,7 @@ local camera   = require 'lib.camera'
 local Player   = require 'src.beings.Player'
 local Follower = require 'src.beings.Follower'
 local Ptero    = require 'src.beings.Ptero'
+local Ghost    = require 'src.beings.Ghost'
 local Being    = require 'src.beings.Being'
 local Map      = require 'src.world.Map'
 
@@ -18,6 +19,7 @@ function Play:enteredState()
   player = Player:new(map, 4, 4)
   Follower:new(map, player.body, 20, 20)
   Ptero:new(map, player.body, 20, 4)
+  Ghost:new(map, player.body, 26, 36)
 end
 
 function Play:exitedState()

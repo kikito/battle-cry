@@ -7,7 +7,7 @@ local PteroBody  = class('Ptero', MobileBody)
 
 local spriteW, spriteH = 32, 32
 
-local function loadAnimations(self)
+function PteroBody:loadAnimations()
   self.image  = media.images.ptero
   local g = anim8.newGrid(spriteW, spriteH, self.image:getWidth(), self.image:getHeight())
   self.animations = {
@@ -21,12 +21,10 @@ local function loadAnimations(self)
 end
 
 function PteroBody:initialize(map,x,y,speed)
-  MobileBody.initialize(self, map,x,y,12,6)
+  MobileBody.initialize(self, map,x,y,12,6,speed)
   self.walker = false
-  self.facing = "down"
-  self.speed  = speed
 
-  loadAnimations(self)
+  self:loadAnimations()
 end
 
 function PteroBody:draw()
