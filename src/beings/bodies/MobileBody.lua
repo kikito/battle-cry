@@ -11,12 +11,10 @@ local deltasByDirection = {
 
 local diagonalCoefficient = math.sin(1)
 
-function MobileBody:initialize(map,x,y,width,height)
-  Body.initialize(self,map,x,y)
-  self.width = width
-  self.height = height
-  self.halfWidth = width/2
-  self.halfHeight = height/2
+function MobileBody:initialize(map,x,y,width,height,speed)
+  Body.initialize(self,map,x,y,width,height)
+  self.speed = speed
+  self.facing = "up"
 end
 
 function MobileBody:prepareMove(wishes)

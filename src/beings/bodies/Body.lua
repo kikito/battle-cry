@@ -2,11 +2,18 @@ local Each = require 'lib.each'
 
 local Body = class('Body'):include(Each)
 
-function Body:initialize(map, mx, my)
+function Body:initialize(map, mx, my, width, height)
   self.senses = {}
   self.x, self.y = map:toWorldCentered(mx, my)
+
+  self.width = width
+  self.height = height
+  self.halfWidth = width/2
+  self.halfHeight = height/2
+
   self.solid  = true
   self.walker = true
+
   self.map = map
   self.cell = self.map:add(self)
   self.class:add(self)
@@ -19,10 +26,6 @@ end
 
 function Body:getPosition()
   return self.x, self.y
-end
-
-function Body:getContainingCell()
-  return self.map:getCell(self.x, self.y)
 end
 
 function Body:update(wishes, dt)
