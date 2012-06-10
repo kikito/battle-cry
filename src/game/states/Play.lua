@@ -28,8 +28,8 @@ function Play:exitedState()
 end
 
 function Play:draw()
-  camera.draw(function()
-    map:draw(camera.getViewport())
+  camera.draw(function(l,t,w,h)
+    map:draw(l,t,w,h)
   end)
 end
 
