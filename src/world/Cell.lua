@@ -2,7 +2,7 @@ local Cell = class(..., nil)
 
 local weakMt = {__mode = "k"}
 
-function Cell:initialize(width, height, left, top)
+function Cell:initialize(width, height)
   self.left, self.top, self.width, self.height = left, top, width, height
   self.right, self.bottom = left + width, top + height
   self.items = setmetatable({}, weakMt)
