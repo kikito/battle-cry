@@ -364,6 +364,23 @@ function bump.each(f, l,t,w,h)
   end
 end
 
+function bump.select(f, l,t,w,h)
+  local collection = {}
+  local length     = 0
+  bump.each(function(item)
+    if f(item) then
+      length = length + 1
+      collection[length] = item
+    end
+  end, l,t,w,h)
+  return collection, length
+end
+
+local function truth() return true end
+function bump.collect(l,t,w,h)
+  return bump.select(truth, l,t,w,h)
+end
+
 -- returns the size of the cell that bump is using
 function bump.getCellSize()
   return __cellSize

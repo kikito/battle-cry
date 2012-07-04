@@ -1,27 +1,33 @@
 local Each = require 'lib.each'
+local bump = require 'lib.bump'
 
 local Body = class(..., nil):include(Each)
 
 function Body:initialize(map, mx, my, width, height)
   self.senses = {}
   self.x, self.y = map:toWorldCentered(mx, my)
+  self.z = 1
 
   self.width = width
   self.height = height
-  self.halfWidth = width/2
-  self.halfHeight = height/2
+  self.halfWidth = width*0.5
+  self.halfHeight = height*0.5
 
   self.solid  = true
   self.walker = true
 
   self.map = map
-  self.cell = self.map:add(self)
   self.class:add(self)
+  bump.add(self)
 end
 
 function Body:destroy()
+  bump.remove(self)
   self.class:remove(self)
-  self.map:remove(self)
+end
+
+function Body:getBBox()
+  return self.x - self.halfWidth, self.y - self.halfHeight, self.width, self.height
 end
 
 function Body:getPosition()
@@ -40,12 +46,14 @@ function Body:sense()
 end
 
 function Body:getPerceivedBy(perceiver)
+  --[[
   local x0,y0 = self.map:toGrid(perceiver.x, perceiver.y)
   local x1,y1 = self.map:toGrid(self.x, self.y)
 
   if self.map:los(x0,y0,x1,y1) then
     perceiver.senses.sight[self] = {x=self.x, y=self.y}
   end
+  ]]
 end
 
 

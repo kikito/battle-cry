@@ -1,3 +1,4 @@
+local bump     = require 'lib.bump'
 local camera   = require 'lib.camera'
 
 local Player   = require 'src.beings.Player'
@@ -6,6 +7,7 @@ local Ptero    = require 'src.beings.Ptero'
 local Ghost    = require 'src.beings.Ghost'
 local Being    = require 'src.beings.Being'
 local Map      = require 'src.world.Map'
+local Tile     = require 'src.world.tiles.Tile'
 
 local Game = require 'src.game.Game'
 local Play = Game:addState('Play')
@@ -13,7 +15,22 @@ local Play = Game:addState('Play')
 local map
 local player
 
+function bump:collision(obj1,obj2,dx,dy)
+  obj1:collision(obj2,dx,dy)
+  obj2:collision(obj1,-dx,-dy)
+end
+
+function bump:endCollision(obj1,obj2)
+  obj1:endCollision(obj2)
+  obj2:endCollision(obj1)
+end
+
+function bump:shouldCollide(obj1,obj2)
+  return obj1:shouldCollide(obj1) or obj2:shouldCollide(obj2)
+end
+
 function Play:enteredState()
+  bump.initialize(64)
   map    = Map:new()
   camera.setBoundary(map:getBoundary())
   player = Player:new(map, 4, 4)
@@ -24,12 +41,19 @@ end
 
 function Play:exitedState()
   map, player = nil, nil
-  Being:destroyAll()
+  Being:safeEach('destroy')
+  Tile:safeEach('destroy')
+end
+
+local function sortForDrawing(a,b)
+  return a.z < b.z or (a.z == b.z and a.y < b.y)
 end
 
 function Play:draw()
   camera.draw(function(l,t,w,h)
-    map:draw(l,t,w,h)
+    local objects, length = bump.collect(wl, wt, ww, wh)
+    table.sort(objects, sortForDrawing)
+    for i=1, length do objects[i]:draw() end
   end)
 end
 

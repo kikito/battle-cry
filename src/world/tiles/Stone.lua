@@ -7,4 +7,4 @@ function Stone:initialize(x,y)
   self.solid = true
 end
 
-return Glass
+return Stone

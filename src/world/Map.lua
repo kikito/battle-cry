@@ -15,12 +15,12 @@ local str = [[
 #      #                           vvvvvvv     vvvvvvv        #
 #      #                            vvvvv       vvvvv         #
 #              ##########                                     #
-#              #        #              vvvvvvvvvvv            #
-#              #        #             vvvvvvvvvvvvv           #
-#              $                     vvvv    vvvvvvv          #
-#          v   $                     vvv      vvvvvv          #
-#          v   $                     vvv      ######          #
-#          v   #        #            vvv  $$                  #
+#              #........#              vvvvvvvvvvv            #
+#              #........#             vvvvvvvvvvvvv           #
+#              $........             vvvv    vvvvvvv          #
+#          v   $........             vvv      vvvvvv          #
+#          v   $........             vvv      ######          #
+#          v   #........#            vvv  $$                  #
 #          v   #####    #            vvv  $$                  #
 #          v            #            vvv      ######          #
 ###### ##################            vvv      vvvvvv          #
@@ -29,7 +29,7 @@ local str = [[
 #                                      vvvvvvvvvvv            #
 #                                                             #
 #                                                             #
-#                                                             #
+#                      .............................          #
 #                                                             #
 #                                                             #
 #                                                             #
@@ -58,7 +58,8 @@ local legend = {
   [' '] = tiles.Grass,
   ['#'] = tiles.BrickWall,
   ['v'] = tiles.Hole,
-  ['$'] = tiles.Glass
+  ['$'] = tiles.GlassWall,
+  ['.'] = tiles.Dirt
 }
 
 local Map = class(..., Grid)
@@ -77,25 +78,15 @@ function Map:initialize()
     end
     y = y + 1
   end
+  self.width = width
+  self.height = height
 end
 
-local function drawRow(row, l, r)
-  for x = l,r do row[x].tile:draw() end
-  for x = l,r do
-    for item, _ in pairs(row[x].items) do
-      item:draw()
-    end
-  end
+function Map:toWorldCentered(mx, my)
+  return Tile.TILEW * (mx - 0.5), Tile.TILEH * (my - 0.5)
 end
 
-function Map:draw(wl, wt, ww, wh)
-  self:eachRow(drawRow, wl, wt, ww, wh)
+function Map:getBoundary()
+  return 0, 0, self.width*Tile.TILEW, self.height*Tile.TILEH
 end
-
-function Map:los(x0,y0, x1,y1)
-  return bresenham.los(x0,y0,x1,y1, function(x,y)
-    return not self.cells[y][x].tile.opaque
-  end)
-end
-
 return Map

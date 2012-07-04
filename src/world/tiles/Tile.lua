@@ -1,3 +1,4 @@
+local bump  = require 'lib.bump'
 local anim8 = require 'lib.anim8'
 local Each  = require 'lib.each'
 
@@ -17,6 +18,14 @@ end
 function Tile:initialize(x, y, quadX, quadY)
   self.quad = grid(quadX, quadY)[1]
   self.x, self.y = x, y
+  self.z = 0
+  self.class:add(self)
+  bump.add(self)
+end
+
+function Tile:destroy()
+  bump.remove(self)
+  self.class:remove(self)
 end
 
 function Tile:isPassableBy(body)
@@ -31,6 +40,9 @@ function Tile:draw()
   love.graphics.drawq(media.images.tiles, self.quad, _toGrid(self))
 end
 
-
+function Tile:getBBox()
+  local x, y = _toGrid(self)
+  return x,y,Tile.TILEW,Tile.TILEH
+end
 
 return Tile
