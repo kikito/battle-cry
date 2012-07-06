@@ -30,6 +30,10 @@ function Body:getBBox()
   return self.x - self.halfWidth, self.y - self.halfHeight, self.width, self.height
 end
 
+function Body:getCenter()
+  return self.x, self.y
+end
+
 function Body:getPosition()
   return self.x, self.y
 end

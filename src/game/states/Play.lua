@@ -46,7 +46,11 @@ function Play:exitedState()
 end
 
 local function sortForDrawing(a,b)
-  return a.z < b.z or (a.z == b.z and a.y < b.y)
+  if a.z < b.z then return true end
+  if a.z > b.z then return false end
+  local ax,ay = a:getCenter()
+  local bx,by = b:getCenter()
+  return ay < by
 end
 
 function Play:draw()

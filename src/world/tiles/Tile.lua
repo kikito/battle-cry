@@ -40,6 +40,10 @@ function Tile:draw()
   love.graphics.drawq(media.images.tiles, self.quad, _toGrid(self))
 end
 
+function Tile:getCenter()
+  return (self.x - 0.5) * Tile.TILEW, (self.y + 0.5) * Tile.TILEH
+end
+
 function Tile:getBBox()
   local x, y = _toGrid(self)
   return x,y,Tile.TILEW,Tile.TILEH
