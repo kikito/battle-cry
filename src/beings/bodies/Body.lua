@@ -31,7 +31,7 @@ function Body:getBBox()
 end
 
 function Body:getCenter()
-  return self.x, self.y
+  return self:getPosition()
 end
 
 function Body:getPosition()
@@ -47,6 +47,13 @@ function Body:sense()
   self.senses.y = self.y
   self.senses.sight = {}
   Body:each('getPerceivedBy', self)
+end
+
+function Body:shouldCollide(other)
+  return (self.solid and other.solid) or (self.walker and other.hole)
+end
+
+function Body:collision(other, dx, dy)
 end
 
 function Body:getPerceivedBy(perceiver)

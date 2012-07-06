@@ -15,18 +15,18 @@ local Play = Game:addState('Play')
 local map
 local player
 
-function bump:collision(obj1,obj2,dx,dy)
+function bump.collision(obj1,obj2,dx,dy)
   obj1:collision(obj2,dx,dy)
   obj2:collision(obj1,-dx,-dy)
 end
 
-function bump:endCollision(obj1,obj2)
+function bump.endCollision(obj1,obj2)
   obj1:endCollision(obj2)
   obj2:endCollision(obj1)
 end
 
-function bump:shouldCollide(obj1,obj2)
-  return obj1:shouldCollide(obj1) or obj2:shouldCollide(obj2)
+function bump.shouldCollide(obj1,obj2)
+  return obj1:shouldCollide(obj2) or obj2:shouldCollide(obj1)
 end
 
 function Play:enteredState()
@@ -63,6 +63,7 @@ end
 
 function Play:update(dt)
   Being:updateAll(dt)
+  bump.collide()
   camera.lookAt(player.body.x, player.body.y)
 end
 

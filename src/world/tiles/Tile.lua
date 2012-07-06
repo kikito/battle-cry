@@ -28,12 +28,11 @@ function Tile:destroy()
   self.class:remove(self)
 end
 
-function Tile:isPassableBy(body)
-  if (body.solid  and self.solid) or
-     (body.walker and self.hole)  then
-    return false
-  end
-  return true
+function Tile:shouldCollide(other)
+  return false
+end
+
+function Tile:collision()
 end
 
 function Tile:draw()
@@ -46,7 +45,7 @@ end
 
 function Tile:getBBox()
   local x, y = _toGrid(self)
-  return x,y,Tile.TILEW,Tile.TILEH
+  return x+Tile.TILEW, y+Tile.TILEH, Tile.TILEW, Tile.TILEH
 end
 
 return Tile
