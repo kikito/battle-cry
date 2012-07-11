@@ -203,15 +203,22 @@ end
 local function _getItemNeighborsSorted(item)
   local info = __items[item]
   local neighbors, length = {}, 0
+  local distanceCache = {}
   local collectNeighbor = function(neighbor)
-    if neighbor ~= item then
+    if neighbor ~= item
+    and bump.shouldCollide(item, neighbor)
+    then
       length = length + 1
       neighbors[length] = neighbor
     end
   end
   _eachItemInRegion(collectNeighbor, info.gl, info.gt, info.gw, info.gh)
-
-  info.neighborSort    = info.neighborSort or function(a,b)  return _squareDistance(a, item) < _squareDistance(b,item) end
+  info.neighborSort    = info.neighborSort or function(a,b)
+    distanceCache[a] = distanceCache[a] or _squareDistance(a, item)
+    distanceCache[b] = distanceCache[b] or _squareDistance(b,item)
+    return distanceCache[a] < distanceCache[b]
+  end
+  distanceCache = {}
   sort(neighbors, info.neighborSort)
 
   return neighbors, length
