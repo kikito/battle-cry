@@ -35,6 +35,9 @@ end
 function Tile:collision()
 end
 
+function Tile:endCollision()
+end
+
 function Tile:draw()
   love.graphics.drawq(media.images.tiles, self.quad, _toGrid(self))
 end

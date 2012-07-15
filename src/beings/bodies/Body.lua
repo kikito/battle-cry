@@ -56,6 +56,9 @@ end
 function Body:collision(other, dx, dy)
 end
 
+function Body:endCollision()
+end
+
 function Body:getPerceivedBy(perceiver)
   --[[
   local x0,y0 = self.map:toGrid(perceiver.x, perceiver.y)
