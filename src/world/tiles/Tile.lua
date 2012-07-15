@@ -48,7 +48,7 @@ end
 
 function Tile:getBBox()
   local x, y = _toGrid(self)
-  return x+Tile.TILEW, y+Tile.TILEH, Tile.TILEW, Tile.TILEH
+  return x, y+Tile.TILEH, Tile.TILEW, Tile.TILEH
 end
 
 return Tile
