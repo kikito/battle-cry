@@ -17,11 +17,10 @@ function MobileBody:initialize(map,x,y,width,height,speed)
   self.facing = "up"
 end
 
-function MobileBody:collide(other, dx, dy)
+function MobileBody:collision(other, dx, dy)
   self.x = self.x + dx
   self.y = self.y + dy
 end
-
 
 function MobileBody:prepareMove(wishes)
   local dx, dy = 0,0
