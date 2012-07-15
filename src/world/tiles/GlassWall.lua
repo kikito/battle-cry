@@ -1,4 +1,4 @@
-local Tile = require 'src.world.tiles.Tile'
+local Tile  = require 'src.world.tiles.Tile'
 local Grass = require 'src.world.tiles.Grass'
 
 local GlassWall = class(..., Tile)
