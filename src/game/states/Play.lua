@@ -30,7 +30,7 @@ function bump.shouldCollide(obj1,obj2)
 end
 
 function Play:enteredState()
-  bump.initialize(64)
+  bump.initialize(16)
   map    = Map:new()
   camera.setBoundary(map:getBoundary())
   player = Player:new(map, 4, 4)
@@ -63,7 +63,7 @@ end
 
 function Play:update(dt)
   Being:updateAll(dt)
-  bump.collide()
+  bump.collide(camera.getViewport())
   camera.lookAt(player.body.x, player.body.y)
 end
 
