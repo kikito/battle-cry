@@ -20,7 +20,7 @@ function Tile:initialize(x, y, quadX, quadY)
   self.x, self.y = x, y
   self.z = 0
   self.class:add(self)
-  bump.add(self)
+  bump.addStatic(self)
 end
 
 function Tile:destroy()

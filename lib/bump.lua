@@ -177,7 +177,7 @@ end
 -- updates the information bump has about one item - its boundingbox, and containing cells
 local function _updateItem(item)
   local info = __items[item]
-  if not info then return end
+  if not info or info.static then return end
 
   -- if the new bounding box is different from the stored one
   local l,t,w,h = bump.getBBox(item)
@@ -265,6 +265,7 @@ end
 
 -- given an item, parse all its neighbors, updating the collisions & tested tables, and invoking the collision callback
 local function _collideItemWithNeighbors(item)
+  if __items[item].static then return end
   local neighbor
   local neighbors, length = _getItemNeighborsSorted(item)
 
@@ -329,6 +330,12 @@ end
 function bump.add(item)
   __items[item] = __items[item] or {}
   _updateItem(item)
+end
+
+-- Adds a static item to bump (typically, scenario/immobile items who don't react to collisions)
+function bump.addStatic(item)
+  bump.add(item)
+  __items[item].static = true
 end
 
 -- Removes an item from bump
