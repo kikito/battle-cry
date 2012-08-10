@@ -1,13 +1,13 @@
-local Tile  = require 'src.world.tiles.Tile'
+local Wall  = require 'src.world.tiles.Wall'
 local Grass = require 'src.world.tiles.Grass'
 
-local GlassWall = class(..., Tile)
+local GlassWall = class(..., Wall)
+
+GlassWall.static.FloorClass = Grass
 
 function GlassWall:initialize(x,y)
-  Tile.initialize(self,x,y,2,2)
-  self.z = 1
+  Wall.initialize(self,x,y,2,2)
   self.solid = true
-  Grass:new(x,y)
 end
 
 return GlassWall
