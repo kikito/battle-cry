@@ -11,13 +11,22 @@ local deltasByDirection = {
 
 local diagonalCoefficient = math.sin(1)
 
+
+local function sign(x) return x > 0 and 1 or (x < 0 and -1 or 0) end
+local function mustStop(v,d) return d ~= 0 and sign(d) ~= sign(v) end
+
+
 function MobileBody:initialize(map,x,y,width,height,speed)
   Body.initialize(self,map,x,y,width,height)
   self.speed = speed
   self.facing = "up"
 end
 
+
+
 function MobileBody:collision(other, dx, dy)
+  if mustStop(self.vx, dx) then self.vx = 0 end
+  if mustStop(self.vy, dy) then self.vy = 0 end
   self.x = self.x + dx
   self.y = self.y + dy
 end
