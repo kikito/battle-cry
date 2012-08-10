@@ -1,16 +1,17 @@
-local bump     = require 'lib.bump'
-local camera   = require 'lib.camera'
+local bump        = require 'lib.bump'
+local bump_debug  = require 'lib.bump_debug'
+local camera      = require 'lib.camera'
 
-local Player   = require 'src.beings.Player'
-local Follower = require 'src.beings.Follower'
-local Ptero    = require 'src.beings.Ptero'
-local Ghost    = require 'src.beings.Ghost'
-local Being    = require 'src.beings.Being'
-local Map      = require 'src.world.Map'
-local Tile     = require 'src.world.tiles.Tile'
+local Player      = require 'src.beings.Player'
+local Follower    = require 'src.beings.Follower'
+local Ptero       = require 'src.beings.Ptero'
+local Ghost       = require 'src.beings.Ghost'
+local Being       = require 'src.beings.Being'
+local Map         = require 'src.world.Map'
+local Tile        = require 'src.world.tiles.Tile'
 
-local Game = require 'src.game.Game'
-local Play = Game:addState('Play')
+local Game        = require 'src.game.Game'
+local Play        = Game:addState('Play')
 
 local map
 local player
@@ -46,11 +47,12 @@ function Play:exitedState()
 end
 
 local function sortForDrawing(a,b)
-  if a.z < b.z then return true end
-  if a.z > b.z then return false end
-  local ax,ay = a:getCenter()
-  local bx,by = b:getCenter()
-  return ay < by
+  if a.z == b.z then
+    local _,ay = a:getCenter()
+    local _,by = b:getCenter()
+    return ay < by
+  end
+  return a.z < b.z
 end
 
 function Play:draw()
@@ -58,6 +60,7 @@ function Play:draw()
     local objects, length = bump.collect(wl, wt, ww, wh)
     table.sort(objects, sortForDrawing)
     for i=1, length do objects[i]:draw() end
+    bump_debug.draw(l,t,w,h)
   end)
 end
 
