@@ -10,7 +10,7 @@ local _weakKeys   = {__mode = 'k'}
 local _weakValues = {__mode = 'v'}
 local _defaultCellSize = 128
 
-local abs, floor, sort = math.abs, math.floor, table.sort
+local abs, floor, ceil, sort = math.abs, math.floor, math.ceil, table.sort
 
 local function newWeakTable(t, mt)
   return setmetatable(t or {}, mt or _weakKeys)
@@ -50,12 +50,17 @@ local function _toGrid(wx, wy)
   return floor(wx / __cellSize) + 1, floor(wy / __cellSize) + 1
 end
 
+-- Same as _toGrid, but useful for calculating the right/bottom borders of a rectangle (so they are still inside the cell when touching borders)
+local function _toGridFromInside(wx,wy)
+  return ceil(wx / __cellSize), ceil(wy / __cellSize)
+end
+
 -- given a box in world coordinates, return a box in grid coordinates that contains it
 -- returns the x,y coordinates of the top-left cell, the number of cells to the right and the number of cells down.
 local function _toGridBox(l, t, w, h)
   if not (l and t and w and h) then return nil end
   local gl,gt = _toGrid(l, t)
-  local gr,gb = _toGrid(l+w, t+h)
+  local gr,gb = _toGridFromInside(l+w, t+h)
   return gl, gt, gr-gl, gb-gt
 end
 
@@ -282,6 +287,7 @@ function bump.initialize(cellSize)
   __occupiedCells  = {} -- stores strong references to cells so that they are not gc'ed
   __items          = newWeakTable()
   __prevCollisions = newWeakTable()
+  bump.items = __items
 end
 
 -- (Overridable). Called when two objects start colliding
@@ -366,6 +372,5 @@ function bump.getCellSize()
 end
 
 bump.initialize()
-
 
 return bump
