@@ -19,11 +19,11 @@ local function _drawCell(cell, gx, gy)
 end
 
 local function _drawItemBBox(item)
-  if instanceOf(Body, item)
-  or instanceOf(Wall, item)
-  or instanceOf(Hole, item)
-  then
-    love.graphics.rectangle("line", item:getBBox())
+  if instanceOf(Body, item) then
+    local i = bump.items[item]
+    local l,t = _getCellBBox(i.gl, i.gt)
+    local r,b = _getCellBBox(i.gl + i.gw + 1, i.gt + i.gh + 1)
+    love.graphics.rectangle("line", l, t, r-l, b-t)
   end
 end
 
