@@ -248,7 +248,7 @@ local function _collideItemWithNeighbors(item)
   local info = __items[item]
   if not info or info.static then return end
 
-  local visited, finished = {item=true}, false
+  local visited, finished = {[item]=true}, false
   local neighbors, length, neighbor
   while __items[item] and not finished do
     finished = true
