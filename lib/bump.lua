@@ -194,15 +194,13 @@ end
 -- performs some caching for performance reasons
 -- Notice that neighbors is a read/write parameter
 local function _sortNeighbors(item, neighbors)
-  local info = __items[item]
   local distanceCache = {}
-  info.neighborSort    = info.neighborSort or function(a,b)
+  local neighborSort = function(a,b)
     distanceCache[a] = distanceCache[a] or _squareDistance(a, item)
     distanceCache[b] = distanceCache[b] or _squareDistance(b,item)
     return distanceCache[a] < distanceCache[b]
   end
-  distanceCache = {}
-  sort(neighbors, info.neighborSort)
+  sort(neighbors, neighborSort)
 end
 
 -- given an item and one of its neighbors, see if they collide. If yes,
@@ -221,7 +219,7 @@ local function _collideItemWithNeighbor(item, neighbor)
                                          ninfo.l, ninfo.t, ninfo.w, ninfo.h, ninfo.cx, ninfo.cy)
     -- store the collision
     __collisions[item] = __collisions[item] or newWeakTable()
-    __collisions[item][neighbor] = {dx = dx, dy = dy}
+    __collisions[item][neighbor] = true
 
     -- invoke the collision callback
     bump.collision(item, neighbor, dx, dy)
